@@ -1,4 +1,4 @@
-C:\Users\safwa\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.7660.37\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" "C:\Users\safwa\OneDrive - University of Leeds\CompSci\Y1\Procedural Programming\C code\Coursework 2"
+C:\Users\safwa\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.7660.37\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\safwa\CLionProjects\Coursework-2
 -- The C compiler identification is GNU 8.1.0
 -- Check for working C compiler: C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/gcc.exe
 -- Check for working C compiler: C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/gcc.exe - works
@@ -8,4 +8,4 @@ C:\Users\safwa\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.7660.37\bin\c
 -- Detecting C compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: C:/Users/safwa/OneDrive - University of Leeds/CompSci/Y1/Procedural Programming/C code/Coursework 2/cmake-build-debug
+-- Build files have been written to: C:/Users/safwa/CLionProjects/Coursework-2/cmake-build-debug

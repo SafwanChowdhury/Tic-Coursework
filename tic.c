@@ -116,7 +116,9 @@ int peek (int row, int col)
 // --------------------------------------------------------------------------------------------------
 // NOW IT IS YOUR TURN, YOU CAN DEFINE ANY OTHER GLOBAL VARIABLES YOU MAY NEED IN YOUR CODE BELOW THIS LINE
 
-
+int gridsize;
+int winlength;
+char gridc[2][2];
 
 
 // END OF SECTION FOR DECLARRING ADDITIONAL GLOBAL VARIABLES
@@ -139,7 +141,11 @@ int peek (int row, int col)
 // If everything is correct the function returns 1 indicating success in initialising the game.
 int newGame (int gridsize, int winlength)
 {
-	return -99;
+    gridc[gridsize][gridsize];
+    showGrid();
+    intgrid(gridsize);
+    showGrid();
+	return 0;
 }
 
 // The purpose of this function is to show the game's grid on the screen
@@ -152,7 +158,11 @@ int newGame (int gridsize, int winlength)
 // There is one empty line after the grid to make it stand out from text after it
 void showGrid ()
 {
-
+    for(int i = 0; i < gridsize; i++){
+        for(int j = 0; j < gridsize; j++ )
+            printf("%f, ",gridc[i][j]);
+        printf("\n");
+    }
 
 }
 
@@ -261,9 +271,24 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
 // IF YOU NEED ADDITIONAL FUNCTIONS YOU CAN DEFINE THEM BELOW THIS LINE
 //----------------------------------------------------------------------
 
+int inputer()
+{
+    int x;
+    scanf("%i",&x);
+    return x;
+}
 
+void printer(int x)
+{
+    printf("Debugger: %i\n", x);
+}
 
-
+void intgrid()
+{
+    for (int i=0; i<gridsize; i++)
+        for (int j=0; j<gridsize; j++)
+            gridc[i][j] = "h";
+}
 
 
 // DON'T CHANGE THE FOLLOWING 3 LINES
@@ -271,6 +296,11 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
 int  main (int argc, char* argv[])
 {
 	// ENTER THE CODE OF YOUR main FUNCTION BELOW
+    promptEnterGridSize ();
+    gridsize = inputer();
+    promptEnterWinLength(gridsize);
+    winlength = inputer();
+    newGame(gridsize,winlength);
 
 
 

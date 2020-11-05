@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "C:/Users/safwa/OneDrive - University of Leeds/CompSci/Y1/Procedural Programming/C code/Coursework 2/tic.c" "C:/Users/safwa/OneDrive - University of Leeds/CompSci/Y1/Procedural Programming/C code/Coursework 2/cmake-build-debug/CMakeFiles/Coursework_2.dir/tic.c.obj"
+  "C:/Users/safwa/CLionProjects/Coursework-2/tic.c" "C:/Users/safwa/CLionProjects/Coursework-2/cmake-build-debug/CMakeFiles/Coursework_2.dir/tic.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
