@@ -118,7 +118,7 @@ int peek (int row, int col)
 
 int gridsize;
 int winlength;
-char gridc[2][2];
+int gridc[10][10];
 
 
 // END OF SECTION FOR DECLARRING ADDITIONAL GLOBAL VARIABLES
@@ -141,8 +141,9 @@ char gridc[2][2];
 // If everything is correct the function returns 1 indicating success in initialising the game.
 int newGame (int gridsize, int winlength)
 {
+    gridsizeq();
+    winlengthq();
     gridc[gridsize][gridsize];
-    showGrid();
     intgrid(gridsize);
     showGrid();
 	return 0;
@@ -158,9 +159,18 @@ int newGame (int gridsize, int winlength)
 // There is one empty line after the grid to make it stand out from text after it
 void showGrid ()
 {
+    int j = 0;
+    int i = 0;
+    printf("\n");
+    printf("\t");
     for(int i = 0; i < gridsize; i++){
-        for(int j = 0; j < gridsize; j++ )
-            printf("%f, ",gridc[i][j]);
+        printf("%i", i);
+    }
+    printf("\n");
+    for(int i = 0; i < gridsize; i++){
+        printf("%i\t", i);
+        for(int j = 0; j < gridsize; j++)
+            printf("%c",gridc[i][j]);
         printf("\n");
     }
 
@@ -283,11 +293,36 @@ void printer(int x)
     printf("Debugger: %i\n", x);
 }
 
+void gridsizeq(){
+    promptEnterGridSize ();
+    gridsize = inputer();
+    while (gridsize < 3 || gridsize > 10){
+        showErrIndex();
+        promptEnterGridSize ();
+        gridsize = inputer();
+    }
+
+}
+
+
+void winlengthq(){
+    promptEnterWinLength (gridsize);
+    winlength = inputer();
+    while (winlength < 3 || winlength > gridsize){
+        showErrIndex();
+        promptEnterWinLength (gridsize);
+        winlength = inputer();
+    }
+
+}
+
 void intgrid()
 {
+    char opp;
+    opp = '.';
     for (int i=0; i<gridsize; i++)
         for (int j=0; j<gridsize; j++)
-            gridc[i][j] = "h";
+            gridc[i][j] = opp;
 }
 
 
@@ -296,10 +331,6 @@ void intgrid()
 int  main (int argc, char* argv[])
 {
 	// ENTER THE CODE OF YOUR main FUNCTION BELOW
-    promptEnterGridSize ();
-    gridsize = inputer();
-    promptEnterWinLength(gridsize);
-    winlength = inputer();
     newGame(gridsize,winlength);
 
 

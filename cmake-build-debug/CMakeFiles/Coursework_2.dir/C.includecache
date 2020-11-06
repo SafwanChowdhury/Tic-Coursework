@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/safwa/CLionProjects/Coursework-2/tic.c
+stdio.h
+-
+stdlib.h
+-
+tic.h
+C:/Users/safwa/CLionProjects/Coursework-2/tic.h
+
+C:/Users/safwa/CLionProjects/Coursework-2/tic.h
+
