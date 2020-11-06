@@ -119,6 +119,8 @@ int peek (int row, int col)
 int gridsize;
 int winlength;
 int gridc[10][10];
+char symbol;
+int round = 0;
 
 
 // END OF SECTION FOR DECLARRING ADDITIONAL GLOBAL VARIABLES
@@ -145,7 +147,6 @@ int newGame (int gridsize, int winlength)
     winlengthq();
     gridc[gridsize][gridsize];
     intgrid(gridsize);
-    showGrid();
 	return 0;
 }
 
@@ -190,7 +191,9 @@ void showGrid ()
 // my solution is 4 lines only
 int makeMove(int row, int col, char symbol)
 {
-    return -99;
+    promptChooseLocation(symbol);
+    go();
+    return 0;
 }
 
 // This function is used to check if the board is full, i.e. every location in the grid is filled with either X or O
@@ -325,6 +328,12 @@ void intgrid()
             gridc[i][j] = opp;
 }
 
+void go(){
+    if ((round % 2) == 0)
+        symbol = 'X';
+    else
+        symbol = 'O';
+}
 
 // DON'T CHANGE THE FOLLOWING 3 LINES
 #ifndef TEST
@@ -332,6 +341,13 @@ int  main (int argc, char* argv[])
 {
 	// ENTER THE CODE OF YOUR main FUNCTION BELOW
     newGame(gridsize,winlength);
+    for (int i = 0; i < 5; i++) {
+        go();
+        makeMove(0, 1, symbol);
+        showGrid();
+        printf("\n");
+        round++;
+    }
 
 
 
