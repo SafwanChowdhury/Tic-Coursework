@@ -193,8 +193,13 @@ void showGrid ()
 // my solution is 4 lines only
 int makeMove(int row, int col, char symbol)
 {
+
+    if (gridc[row][col] != '.'){
+        showErrIndex();
+        return 0;
+    }
     gridc[row][col] = symbol;
-    return 0;
+    return 1;
 }
 
 // This function is used to check if the board is full, i.e. every location in the grid is filled with either X or O
@@ -202,7 +207,16 @@ int makeMove(int row, int col, char symbol)
 // my solution is 5 lines
 int boardIsFull()
 {
-	return -99;
+    int counter
+    for(int i; i < gridsize; i++) {
+        for (int j; j < gridsize; j++) {
+            if (gridc[i][j] = 'X' || gridc[i][j] = 'O')
+                counter++
+        }
+    }
+    if (counter == pow(gridsize,2))
+        return 1;
+	return 0;
 }
 
 
@@ -336,14 +350,14 @@ void go() {
         symbol = 'O';
 }
 
-void chooselocation(){
+int chooselocation(){
     scanf("%i,%i",&row,&col);
     if (row > gridsize || col > gridsize || row < 0 || col < 0) {
         printf("\n");
         showErrIndex();
         chooselocation();
-
     }
+    return row;
 }
 
 // DON'T CHANGE THE FOLLOWING 3 LINES
@@ -352,11 +366,14 @@ int  main (int argc, char* argv[])
 {
 	// ENTER THE CODE OF YOUR main FUNCTION BELOW
     newGame(gridsize,winlength);
+    int r;
     do{
         go();
-        promptChooseLocation(symbol);
-        chooselocation();
-        makeMove(row, col, symbol);
+        do{
+            promptChooseLocation(symbol);
+            chooselocation();
+            r = makeMove(row, col, symbol);
+        }while (r != 1);
         showGrid();
         t++;
     }while (win != 1);
