@@ -124,6 +124,7 @@ int t = 0;
 int row;
 int col;
 int end = 0;
+int length;
 
 // END OF SECTION FOR DECLARRING ADDITIONAL GLOBAL VARIABLES
 // ----------------------------------------------------------
@@ -147,6 +148,7 @@ int newGame (int gridsize, int winlength)
 {
     gridsizeq();
     winlengthq();
+    length = winlength();
     gridc[gridsize][gridsize];
     intgrid(gridsize);
 	return 0;
@@ -229,6 +231,7 @@ int boardIsFull()
 // If any of the parameters is invalid the function should return -1 indicating failure to make a move
 int checkHorizontal (char symbol, int length)
 {
+
 	return -99;
 }
 
