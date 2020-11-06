@@ -120,8 +120,10 @@ int gridsize;
 int winlength;
 int gridc[10][10];
 char symbol;
-int round = 0;
-
+int t = 0;
+int row;
+int col;
+int win = 0;
 
 // END OF SECTION FOR DECLARRING ADDITIONAL GLOBAL VARIABLES
 // ----------------------------------------------------------
@@ -162,8 +164,7 @@ void showGrid ()
 {
     int j = 0;
     int i = 0;
-    printf("\n");
-    printf("\t");
+    printf("\n\t");
     for(int i = 0; i < gridsize; i++){
         printf("%i", i);
     }
@@ -174,6 +175,7 @@ void showGrid ()
             printf("%c",gridc[i][j]);
         printf("\n");
     }
+    printf("\n");
 
 }
 
@@ -191,8 +193,7 @@ void showGrid ()
 // my solution is 4 lines only
 int makeMove(int row, int col, char symbol)
 {
-    promptChooseLocation(symbol);
-    go();
+    gridc[row][col] = symbol;
     return 0;
 }
 
@@ -321,18 +322,22 @@ void winlengthq(){
 
 void intgrid()
 {
-    char opp;
-    opp = '.';
+    char empty;
+    empty = '.';
     for (int i=0; i<gridsize; i++)
         for (int j=0; j<gridsize; j++)
-            gridc[i][j] = opp;
+            gridc[i][j] = empty;
 }
 
-void go(){
-    if ((round % 2) == 0)
+void go() {
+    if ((t % 2) == 0)
         symbol = 'X';
     else
         symbol = 'O';
+}
+
+void chooselocation(){
+    scanf("%i,%i",&row,&col);
 }
 
 // DON'T CHANGE THE FOLLOWING 3 LINES
@@ -341,13 +346,15 @@ int  main (int argc, char* argv[])
 {
 	// ENTER THE CODE OF YOUR main FUNCTION BELOW
     newGame(gridsize,winlength);
-    for (int i = 0; i < 5; i++) {
+    do{
         go();
-        makeMove(0, 1, symbol);
+        promptChooseLocation(symbol);
+        chooselocation();
+        makeMove(row, col, symbol);
         showGrid();
-        printf("\n");
-        round++;
-    }
+        t++;
+    }while (win != 1);
+
 
 
 
