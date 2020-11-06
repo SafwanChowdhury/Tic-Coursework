@@ -197,7 +197,7 @@ int makeMove(int row, int col, char symbol)
 {
 
     if (gridc[row][col] != '.'){
-        showErrIndex();
+        showErrTaken();
         return 0;
     }
     gridc[row][col] = symbol;
@@ -231,8 +231,16 @@ int boardIsFull()
 // If any of the parameters is invalid the function should return -1 indicating failure to make a move
 int checkHorizontal (char symbol, int length)
 {
-
-	return -99;
+    int counter = 0;
+    for (int j = 0 ;j < gridsize; j++) {
+        if (gridc[row][j] == symbol) {
+            counter++;
+        }
+    }
+    if (counter == length){
+        return 1;
+    }
+	return -1;
 }
 
 
@@ -243,7 +251,16 @@ int checkHorizontal (char symbol, int length)
 // If any of the parameters is invalid the function should return -1 indicating failure to make a move
 int checkVertical (char symbol, int length)
 {
-	return -99;
+    int counter = 0;
+    for (int j = 0 ;j < gridsize; j++) {
+        if (gridc[j][col] == symbol) {
+            counter++;
+        }
+    }
+    if (counter == length){
+        return 1;
+    }
+    return -1;
 }
 
 // This function is used to check if there is any diagonal line in the grid that contains a consecutive sequence of the same symbol
@@ -372,6 +389,7 @@ int  main (int argc, char* argv[])
 	// ENTER THE CODE OF YOUR main FUNCTION BELOW
     newGame(gridsize,winlength);
     int r;
+    length = winlength;
     do{
         go();
         do {
@@ -384,6 +402,16 @@ int  main (int argc, char* argv[])
         r = boardIsFull();
         if (r == 1)
             end = 1;
+        r = checkHorizontal(symbol, length);
+        if (r == 1) {
+            end = 1;
+            showWinMessage(symbol);
+        }
+        r = checkVertical(symbol, length);
+        if (r == 1) {
+            end = 1;
+            showWinMessage(symbol);
+        }
     }while (end != 1);
 
 
