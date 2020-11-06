@@ -123,7 +123,7 @@ char symbol;
 int t = 0;
 int row;
 int col;
-int win = 0;
+int end = 0;
 
 // END OF SECTION FOR DECLARRING ADDITIONAL GLOBAL VARIABLES
 // ----------------------------------------------------------
@@ -207,15 +207,17 @@ int makeMove(int row, int col, char symbol)
 // my solution is 5 lines
 int boardIsFull()
 {
-    int counter
-    for(int i; i < gridsize; i++) {
-        for (int j; j < gridsize; j++) {
-            if (gridc[i][j] = 'X' || gridc[i][j] = 'O')
-                counter++
+    int counter = 0;
+    for (int i = 0; i < gridsize; i++) {
+        for (int j = 0; j < gridsize; j++) {
+            if (gridc[i][j] == 'X' || gridc[i][j] == 'O') {
+                counter++;
+            }
         }
     }
-    if (counter == pow(gridsize,2))
+    if (counter == (gridsize*gridsize)) {
         return 1;
+    }
 	return 0;
 }
 
@@ -369,14 +371,18 @@ int  main (int argc, char* argv[])
     int r;
     do{
         go();
-        do{
+        do {
             promptChooseLocation(symbol);
             chooselocation();
             r = makeMove(row, col, symbol);
-        }while (r != 1);
+        }while(r != 1);
         showGrid();
         t++;
-    }while (win != 1);
+        r = boardIsFull();
+        if (r == 1)
+            end = 1;
+    }while (end != 1);
+
 
 
 
