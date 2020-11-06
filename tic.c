@@ -148,7 +148,7 @@ int newGame (int gridsize, int winlength)
 {
     gridsizeq();
     winlengthq();
-    length = winlength();
+    length = winlength;
     gridc[gridsize][gridsize];
     intgrid(gridsize);
 	return 0;
