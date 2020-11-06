@@ -338,6 +338,12 @@ void go() {
 
 void chooselocation(){
     scanf("%i,%i",&row,&col);
+    if (row > gridsize || col > gridsize || row < 0 || col < 0) {
+        printf("\n");
+        showErrIndex();
+        chooselocation();
+
+    }
 }
 
 // DON'T CHANGE THE FOLLOWING 3 LINES
