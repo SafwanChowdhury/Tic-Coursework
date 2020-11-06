@@ -120,7 +120,7 @@ int gridsize;
 int winlength;
 int gridc[10][10];
 char symbol;
-int round = 0;
+int t;
 
 
 // END OF SECTION FOR DECLARRING ADDITIONAL GLOBAL VARIABLES
@@ -143,10 +143,8 @@ int round = 0;
 // If everything is correct the function returns 1 indicating success in initialising the game.
 int newGame (int gridsize, int winlength)
 {
-    gridsizeq();
-    winlengthq();
+    t = 0;
     gridc[gridsize][gridsize];
-    intgrid(gridsize);
 	return 0;
 }
 
@@ -160,10 +158,7 @@ int newGame (int gridsize, int winlength)
 // There is one empty line after the grid to make it stand out from text after it
 void showGrid ()
 {
-    int j = 0;
-    int i = 0;
-    printf("\n");
-    printf("\t");
+    printf("\n\n\t");
     for(int i = 0; i < gridsize; i++){
         printf("%i", i);
     }
@@ -192,7 +187,6 @@ void showGrid ()
 int makeMove(int row, int col, char symbol)
 {
     promptChooseLocation(symbol);
-    go();
     return 0;
 }
 
@@ -291,7 +285,7 @@ int inputer()
     return x;
 }
 
-void printer(int x)
+void debug(int x)
 {
     printf("Debugger: %i\n", x);
 }
@@ -329,7 +323,7 @@ void intgrid()
 }
 
 void go(){
-    if ((round % 2) == 0)
+    if ((t % 2) == 0)
         symbol = 'X';
     else
         symbol = 'O';
@@ -340,13 +334,16 @@ void go(){
 int  main (int argc, char* argv[])
 {
 	// ENTER THE CODE OF YOUR main FUNCTION BELOW
+    gridsizeq();
+    winlengthq();
     newGame(gridsize,winlength);
+    intgrid(gridsize);
     for (int i = 0; i < 5; i++) {
         go();
         makeMove(0, 1, symbol);
         showGrid();
         printf("\n");
-        round++;
+        t++;
     }
 
 
