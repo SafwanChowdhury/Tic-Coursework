@@ -147,10 +147,8 @@ int length;
 int newGame (int gridsize, int winlength)
 {
     gridsizeq();
-    winlengthq();
-    length = winlength;
-    gridc[gridsize][gridsize];
-    intgrid(gridsize);
+    winlengthq(gridsize);
+    intgrid();
     return 0;
 }
 
@@ -164,17 +162,15 @@ int newGame (int gridsize, int winlength)
 // There is one empty line after the grid to make it stand out from text after it
 void showGrid ()
 {
-    int j = 0;
-    int i = 0;
     printf("\n\t");
     for(int i = 0; i < gridsize; i++){
-        printf("%i", i);
+        printf("%i ", i);
     }
     printf("\n");
     for(int i = 0; i < gridsize; i++){
         printf("%i\t", i);
         for(int j = 0; j < gridsize; j++)
-            printf("%c",gridc[i][j]);
+            printf("%c ",grid[i][j]);
         printf("\n");
     }
     printf("\n");
@@ -196,11 +192,11 @@ void showGrid ()
 int makeMove(int row, int col, char symbol)
 {
 
-    if (gridc[row][col] != '.'){
+    if (grid[row][col] != '.'){
         showErrTaken();
         return 0;
     }
-    gridc[row][col] = symbol;
+    grid[row][col] = symbol;
     return 1;
 }
 
@@ -212,7 +208,7 @@ int boardIsFull()
     int counter = 0;
     for (int i = 0; i < gridsize; i++) {
         for (int j = 0; j < gridsize; j++) {
-            if (gridc[i][j] == 'X' || gridc[i][j] == 'O') {
+            if (grid[i][j] == 'X' || grid[i][j] == 'O') {
                 counter++;
             }
         }
@@ -233,13 +229,14 @@ int checkHorizontal (char symbol, int length)
 {
     int counter = 0;
     for (int j = 0 ;j < gridsize; j++) {
-        if (gridc[row][j] == symbol) {
+        if (grid[row][j] == symbol) {
             counter++;
         }
     }
-    if (counter == length){
+    if (counter == length)
         return 1;
-    }
+    else if (counter != length)
+        return 0;
     return -1;
 }
 
@@ -253,13 +250,15 @@ int checkVertical (char symbol, int length)
 {
     int counter = 0;
     for (int j = 0 ;j < gridsize; j++) {
-        if (gridc[j][col] == symbol) {
+        if (grid[j][col] == symbol) {
             counter++;
         }
     }
     if (counter == length){
         return 1;
     }
+    else if (counter != length)
+        return 0;
     return -1;
 }
 
@@ -273,11 +272,10 @@ int checkDiagonals (char symbol, int length)
 {
     char f;
     char g;
+    int counter;
     for(int i = 0; i<gridsize; i++){
         for(int j = 0; j<gridsize; j++){
-            f = gridc[i][j];
-            g = gridc[i+1][j-1];
-            printf("\n%c, %c\n",f,g);
+            counter = 0;
         }
     }
     return 0;
@@ -303,7 +301,19 @@ int checkAntiDiagonals (char symbol, int length)
 // my solution is 5 lines
 int playerHasWon (char symbol , int length)
 {
-    return -99;
+    int h;
+    int v;
+    int d;
+    h = checkHorizontal(symbol,length);
+    v = checkVertical(symbol,length);
+    //d = checkDiagonals(symbol,length);
+    if (h == 1 || v == 1){
+        showWinMessage(symbol);
+        return 1;
+    }
+    else if (h == 0|| v==0)
+        return 0;
+    return -1;
 }
 
 // Do you think the above function (playerHasWon) is the most efficient way of detecting a win?
@@ -337,11 +347,6 @@ int inputer()
     return x;
 }
 
-void printer(int x)
-{
-    printf("Debugger: %i\n", x);
-}
-
 void gridsizeq(){
     promptEnterGridSize ();
     gridsize = inputer();
@@ -352,7 +357,6 @@ void gridsizeq(){
     }
 
 }
-
 
 void winlengthq(){
     promptEnterWinLength (gridsize);
@@ -371,7 +375,7 @@ void intgrid()
     empty = '.';
     for (int i=0; i<gridsize; i++)
         for (int j=0; j<gridsize; j++)
-            gridc[i][j] = empty;
+            grid[i][j] = empty;
 }
 
 void go() {
@@ -390,6 +394,8 @@ int chooselocation(){
     }
     return row;
 }
+
+
 
 // DON'T CHANGE THE FOLLOWING 3 LINES
 #ifndef TEST
@@ -410,22 +416,24 @@ int  main (int argc, char* argv[])
         t++;
         r = boardIsFull();
         if (r == 1)
-            //end = 1;
-            r = checkHorizontal(symbol, length);
+            end = 1;
+        r = playerHasWon(symbol, length);
+        if (r==1)
+            end = 1;
+        /*r = checkHorizontal(symbol, length);
         if (r == 1) {
-            //end = 1;
+            end = 1;
             showWinMessage(symbol);
         }
         r = checkVertical(symbol, length);
         if (r == 1) {
-            //end = 1;
+            end = 1;
             showWinMessage(symbol);
         }
         r = checkDiagonals(symbol, length);
         if (r == 1) {
-            //end = 1;
-            showWinMessage(symbol);
-        }
+            end = 1;
+        }*/
 
     }while (end != 1);
 
