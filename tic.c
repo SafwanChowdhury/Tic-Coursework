@@ -34,61 +34,61 @@ int __Check_Count; // do not use this variable, it is for the grader only
 // please use this function to prompt the user to enter the grid size to start a new game
 void promptEnterGridSize ()
 {
-  printf ("Enter grid size (3-10):");
+    printf ("Enter grid size (3-10):");
 }
 
 // please use this function to prompt the user to enter the winning length for the new game
 // the parameter represents the maximum winning length for this game
 void promptEnterWinLength (int max_win_length)
 {
-	printf ("Enter winning length (3-%i):", max_win_length);
+    printf ("Enter winning length (3-%i):", max_win_length);
 }
 
 // please use this function to prompt the user to enter the location of the symbol
 // this function takes as a parameter the symbol of the player to be prompted
 void promptChooseLocation (char symbol)
 {
-	printf ("Player %c, Choose Location (row,col): ", symbol);
+    printf ("Player %c, Choose Location (row,col): ", symbol);
 }
 
 // please use this function to show an error message when an index is out of range
 void showErrIndex ()
 {
-  printf ("Index out of range, please re-enter\n");
+    printf ("Index out of range, please re-enter\n");
 }
 
 // please use this function to show an error message when a location is already taken
 void showErrTaken ()
 {
-  printf ("This location is already taken\n");
+    printf ("This location is already taken\n");
 }
 
 // please use this function to show the win message at the end of the game
 // this function takes as parameter the symbol of the player who won the game
 void showWinMessage (char symbol)
 {
-	printf ("**************************\n");
-	printf ("Player %c has won the game\n", symbol);
-	printf ("**************************\n");
+    printf ("**************************\n");
+    printf ("Player %c has won the game\n", symbol);
+    printf ("**************************\n");
 }
 
 // please use this function to show a game over (draw) message at the end of the game
 void showGameOverMessage ()
 {
-	printf ("Game over; there are no winners\n");
+    printf ("Game over; there are no winners\n");
 }
 
 //  please use this function to prompt the user to choose if they want to play back the game (at the end of the game)
 void promptPlayBackGame ()
 {
-  printf ("\nWould you like to play back the recorded game? (y,n)?");
+    printf ("\nWould you like to play back the recorded game? (y,n)?");
 }
 
 // please use this function to prompt the user to answer with n (next) or e (exit)
 // to indicate if they want to proceed with the game's replay or exit the program
 void promptNextOrExit ()
 {
-  printf ("Next or Exit (n,e)?");
+    printf ("Next or Exit (n,e)?");
 }
 
 // You will use this function in effPlayerHasWon (see below).
@@ -97,16 +97,16 @@ void promptNextOrExit ()
 // Needless to say again, don't change this function
 int check (int row, int col, char symbol)
 {
-	__Check_Count++;
-	if (grid[row][col] == symbol)
-		return 1;
-	return 0;
+    __Check_Count++;
+    if (grid[row][col] == symbol)
+        return 1;
+    return 0;
 }
 
 // Used by the grader to peek at a certain cell in the grid. Don't use this function
 int peek (int row, int col)
 {
-	return grid[row][col];
+    return grid[row][col];
 }
 
 
@@ -151,7 +151,7 @@ int newGame (int gridsize, int winlength)
     length = winlength;
     gridc[gridsize][gridsize];
     intgrid(gridsize);
-	return 0;
+    return 0;
 }
 
 // The purpose of this function is to show the game's grid on the screen
@@ -220,7 +220,7 @@ int boardIsFull()
     if (counter == (gridsize*gridsize)) {
         return 1;
     }
-	return 0;
+    return 0;
 }
 
 
@@ -240,7 +240,7 @@ int checkHorizontal (char symbol, int length)
     if (counter == length){
         return 1;
     }
-	return -1;
+    return -1;
 }
 
 
@@ -271,7 +271,16 @@ int checkVertical (char symbol, int length)
 // If any of the parameters is invalid the function should return -1 indicating failure to make a move
 int checkDiagonals (char symbol, int length)
 {
-	return -99;
+    char f;
+    char g;
+    for(int i = 0; i<gridsize; i++){
+        for(int j = 0; j<gridsize; j++){
+            f = gridc[i][j];
+            g = gridc[i+1][j-1];
+            printf("\n%c, %c\n",f,g);
+        }
+    }
+    return 0;
 }
 
 // This function is used to check if there is any anti-diagonal (reverse diagonal) section in the grid that contains a consecutive sequence of the same symbol
@@ -282,7 +291,7 @@ int checkDiagonals (char symbol, int length)
 // If any of the parameters is invalid the function should return -1 indicating an failure to make a move
 int checkAntiDiagonals (char symbol, int length)
 {
-	return -99;
+    return -99;
 }
 
 
@@ -294,7 +303,7 @@ int checkAntiDiagonals (char symbol, int length)
 // my solution is 5 lines
 int playerHasWon (char symbol , int length)
 {
-		return -99;
+    return -99;
 }
 
 // Do you think the above function (playerHasWon) is the most efficient way of detecting a win?
@@ -315,7 +324,7 @@ int playerHasWon (char symbol , int length)
 // It returns -1 if any of the parameters have an invalid value.
 int effPlayerHasWon (int row, int col, char symbol , int length)
 {
-	return -99;
+    return -99;
 }
 
 // IF YOU NEED ADDITIONAL FUNCTIONS YOU CAN DEFINE THEM BELOW THIS LINE
@@ -386,7 +395,7 @@ int chooselocation(){
 #ifndef TEST
 int  main (int argc, char* argv[])
 {
-	// ENTER THE CODE OF YOUR main FUNCTION BELOW
+    // ENTER THE CODE OF YOUR main FUNCTION BELOW
     newGame(gridsize,winlength);
     int r;
     length = winlength;
@@ -401,17 +410,23 @@ int  main (int argc, char* argv[])
         t++;
         r = boardIsFull();
         if (r == 1)
-            end = 1;
-        r = checkHorizontal(symbol, length);
+            //end = 1;
+            r = checkHorizontal(symbol, length);
         if (r == 1) {
-            end = 1;
+            //end = 1;
             showWinMessage(symbol);
         }
         r = checkVertical(symbol, length);
         if (r == 1) {
-            end = 1;
+            //end = 1;
             showWinMessage(symbol);
         }
+        r = checkDiagonals(symbol, length);
+        if (r == 1) {
+            //end = 1;
+            showWinMessage(symbol);
+        }
+
     }while (end != 1);
 
 
@@ -421,7 +436,7 @@ int  main (int argc, char* argv[])
 
 
 // DON'T CHANGE THE FOLLOWING 3 LINES
-  return 0;
+    return 0;
 }
 #endif
 // DON'T WRITE ANYTHING BELOW THIS LINE
