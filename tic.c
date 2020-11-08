@@ -146,11 +146,16 @@ int length;
 // If everything is correct the function returns 1 indicating success in initialising the game.
 int newGame (int gridsize, int winlength)
 {
-    gridsizeq();
-    winlengthq(gridsize);
-    intgrid();
+    if (gridsize < 3 || gridsize > 10 || winlength < 3 || winlength > gridsize)
+        return 0;
     t = 0;
-    return 0;
+    length = winlength;
+    char empty;
+    empty = '.';
+    for (int i=0; i<gridsize; i++)
+        for (int j=0; j<gridsize; j++)
+            grid[i][j] = empty;
+    return 1;
 }
 
 // The purpose of this function is to show the game's grid on the screen
@@ -437,14 +442,14 @@ void winlengthq(){
 
 }
 
-void intgrid()
+/*void intgrid()
 {
     char empty;
     empty = '.';
     for (int i=0; i<gridsize; i++)
         for (int j=0; j<gridsize; j++)
             grid[i][j] = empty;
-}
+}*/
 
 void go() {
     if ((t % 2) == 0)
@@ -471,10 +476,17 @@ int  main (int argc, char* argv[])
 {
     // ENTER THE CODE OF YOUR main FUNCTION BELOW
     char playagain;
+    int r;
     do {
-        newGame(gridsize, winlength);
-        int r;
-        length = winlength;
+        gridsizeq();
+        winlengthq(gridsize);
+        r = newGame(gridsize, winlength);
+        if (r == 0){
+            showErrIndex();
+            continue;
+        }
+       // intgrid();
+       // length = winlength;
         do {
             go();
             do {
