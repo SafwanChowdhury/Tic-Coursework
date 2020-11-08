@@ -162,24 +162,40 @@ int t_makeMove ()
     newGame (4,4);
     r = makeMove (-1,1,'X');
     if (r == 0) m++;
+    printf("\nMark: %i\n",m);
+    printf("---------------");
     r = makeMove (5,1,'X');
     if (r == 0) m++;
+    printf("Mark: %i\n",m);
+    printf("---------------");
     r = makeMove (1,-1,'X');
     if (r == 0) m++;
+    printf("Mark: %i\n",m);
+    printf("---------------");
     r = makeMove (1,5,'X');
     if (r == 0) m++;
+    printf("Mark: %i\n",m);
+    printf("---------------");
     makeMove (1,1,'X');
     r = makeMove (1,1,'X'); // return 0 if position is taken
     if (r == 0) m++;
+    printf("Mark: %i\n",m);
+    printf("---------------");
     tell ("#Checking it stores valid moves correctly\n");
     r = makeMove (2,1,'X'); // return 1 on good move
     if (r == 1) m++;
+    printf("Mark: %i\n",m);
+    printf("---------------");
     r = makeMove (0,1,'O');  // O move properly stored
     r = peek (0,1);
     if ((char)r == 'O') m++;
+    printf("Mark: %i\n",m);
+    printf("---------------");
     r = makeMove (2,1,'X');  // X move properly stored
     r = peek (2,1);
     if ((char)r == 'X') m++;
+    printf("Mark: %i\n",m);
+    printf("---------------");
 
     sprintf (s,"%i/8 for function makeMove", m);
 

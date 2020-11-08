@@ -125,6 +125,9 @@ int row;
 int col;
 int end = 0;
 int length;
+int x;
+int y;
+int z;
 
 // END OF SECTION FOR DECLARRING ADDITIONAL GLOBAL VARIABLES
 // ----------------------------------------------------------
@@ -155,6 +158,9 @@ int newGame (int gridsize, int winlength)
     for (int i=0; i<gridsize; i++)
         for (int j=0; j<gridsize; j++)
             grid[i][j] = empty;
+    x = gridsize;
+    y = winlength;
+    z = length;
     return 1;
 }
 
@@ -168,6 +174,8 @@ int newGame (int gridsize, int winlength)
 // There is one empty line after the grid to make it stand out from text after it
 void showGrid ()
 {
+    x = gridsize;
+    z = length;
     printf("\n\t");
     for(int i = 0; i < gridsize; i++){
         printf("%i ", i);
@@ -197,8 +205,16 @@ void showGrid ()
 // my solution is 4 lines only
 int makeMove(int row, int col, char symbol)
 {
-
-    if (grid[row][col] != '.'){
+    gridsize = x;
+    winlength = y;
+    printf("\nGridsize: %i\n",gridsize);
+    printf("Row: %i\n",row);
+    printf("Col: %i\n",col);
+    if (row < 0 || row > gridsize || col < 0 || col > gridsize){
+        showErrIndex();
+        return 0;
+    }
+    else if (grid[row][col] != '.'){
         showErrTaken();
         return 0;
     }
@@ -211,6 +227,7 @@ int makeMove(int row, int col, char symbol)
 // my solution is 5 lines
 int boardIsFull()
 {
+    gridsize = x;
     int counter = 0;
     for (int i = 0; i < gridsize; i++) {
         for (int j = 0; j < gridsize; j++) {
@@ -233,6 +250,8 @@ int boardIsFull()
 // If any of the parameters is invalid the function should return -1 indicating failure to make a move
 int checkHorizontal (char symbol, int length)
 {
+    x = gridsize;
+    z = length;
     int counter = 0;
     for (int j = 0 ;j < gridsize; j++) {
         if (grid[row][j] == symbol) {
@@ -254,6 +273,8 @@ int checkHorizontal (char symbol, int length)
 // If any of the parameters is invalid the function should return -1 indicating failure to make a move
 int checkVertical (char symbol, int length)
 {
+    x = gridsize;
+    z = length;
     int counter = 0;
     for (int j = 0 ;j < gridsize; j++) {
         if (grid[j][col] == symbol) {
@@ -276,6 +297,8 @@ int checkVertical (char symbol, int length)
 // If any of the parameters is invalid the function should return -1 indicating failure to make a move
 int checkDiagonals (char symbol, int length)
 {
+    x = gridsize;
+    z = length;
     int counter = 0;
     for (int k = 0; k < (3*2)-1; k++){
         for (int j = 0; j<= k; j++){
@@ -316,6 +339,8 @@ int checkDiagonals (char symbol, int length)
 // If any of the parameters is invalid the function should return -1 indicating an failure to make a move
 int checkAntiDiagonals (char symbol, int length)
 {
+    x = gridsize;
+    z = length;
     int counter = 0;
     for(int i = 0; i < (gridsize*2)-1; i++){
         counter = 0;
@@ -363,6 +388,8 @@ int checkAntiDiagonals (char symbol, int length)
 // my solution is 5 lines
 int playerHasWon (char symbol , int length)
 {
+    gridsize = x;
+    z = length;
     int h;
     int v;
     int d;
@@ -460,11 +487,11 @@ void go() {
 
 int chooselocation(){
     scanf("%i,%i",&row,&col);
-    /*if (row > gridsize || col > gridsize || row < 0 || col < 0) {
+    if (row > gridsize || col > gridsize || row < 0 || col < 0) {
         printf("\n");
         showErrIndex();
         chooselocation();
-    }*/
+    }
     return row;
 }
 
@@ -485,8 +512,8 @@ int  main (int argc, char* argv[])
             showErrIndex();
             continue;
         }
-       // intgrid();
-       // length = winlength;
+        // intgrid();
+        // length = winlength;
         do {
             go();
             do {
