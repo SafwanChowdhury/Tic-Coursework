@@ -270,15 +270,36 @@ int checkVertical (char symbol, int length)
 // If any of the parameters is invalid the function should return -1 indicating failure to make a move
 int checkDiagonals (char symbol, int length)
 {
-    char f;
-    char g;
-    int counter;
-    for(int i = 0; i<gridsize; i++){
-        for(int j = 0; j<gridsize; j++){
-            counter = 0;
+    int counter = 0;
+    for (int k = 0; k < (3*2)-1; k++){
+        for (int j = 0; j<= k; j++){
+            int i = k-j;
+            if (grid[i][j] == symbol)
+                counter++;
+            if (counter == length)
+                break;
         }
+        if (counter == length)
+            break;
+        counter = 0;
     }
-    return 0;
+    for (int k = 0; k < (3*2)-1; k++){
+        for (int j = 0; j<= k; j++){
+            int i = k-j;
+            if (grid[j][i] == symbol)
+                counter++;
+            if (counter == length)
+                break;
+        }
+        if (counter == length)
+            break;
+        counter = 0;
+    }
+    if (counter == length)
+        return 1;
+    else if (counter != length)
+        return 0;
+    return -1;
 }
 
 // This function is used to check if there is any anti-diagonal (reverse diagonal) section in the grid that contains a consecutive sequence of the same symbol
@@ -289,7 +310,42 @@ int checkDiagonals (char symbol, int length)
 // If any of the parameters is invalid the function should return -1 indicating an failure to make a move
 int checkAntiDiagonals (char symbol, int length)
 {
-    return -99;
+    int counter = 0;
+    for(int i = 0; i < (gridsize*2)-1; i++){
+        counter = 0;
+        int starti = i;
+        int startc = gridsize-1;
+        while(starti < (gridsize*2)-1 && startc >= 0){
+            if (grid[starti][startc] == symbol)
+                counter++;
+            startc--;
+            starti--;
+            if (counter == length)
+                break;
+        }
+        if (counter == length)
+            break;
+    }
+    for(int i = 0; i < (gridsize*2)-1; i++){
+        counter = 0;
+        int starti = i;
+        int startc = gridsize-1;
+        while(starti < (gridsize*2)-1 && startc >= 0){
+            if (grid[startc][starti] == symbol)
+                counter++;
+            startc--;
+            starti--;
+            if (counter == length)
+                break;
+        }
+        if (counter == length)
+            break;
+    }
+    if (counter == length)
+        return 1;
+    else if (counter != length)
+        return 0;
+    return -1;
 }
 
 
@@ -304,14 +360,16 @@ int playerHasWon (char symbol , int length)
     int h;
     int v;
     int d;
+    int ad;
     h = checkHorizontal(symbol,length);
     v = checkVertical(symbol,length);
-    //d = checkDiagonals(symbol,length);
-    if (h == 1 || v == 1){
+    d = checkDiagonals(symbol,length);
+    ad = checkAntiDiagonals(symbol,length);
+    if (h == 1 || v == 1 || d == 1 || ad == 1){
         showWinMessage(symbol);
         return 1;
     }
-    else if (h == 0|| v==0)
+    else if (h == 0|| v==0 || d == 0 || ad == 0)
         return 0;
     return -1;
 }
