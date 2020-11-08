@@ -460,11 +460,11 @@ void go() {
 
 int chooselocation(){
     scanf("%i,%i",&row,&col);
-    if (row > gridsize || col > gridsize || row < 0 || col < 0) {
+    /*if (row > gridsize || col > gridsize || row < 0 || col < 0) {
         printf("\n");
         showErrIndex();
         chooselocation();
-    }
+    }*/
     return row;
 }
 
