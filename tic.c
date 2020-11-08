@@ -149,6 +149,7 @@ int newGame (int gridsize, int winlength)
     gridsizeq();
     winlengthq(gridsize);
     intgrid();
+    t = 0;
     return 0;
 }
 
@@ -405,6 +406,15 @@ int inputer()
     return x;
 }
 
+int inputertext()
+{
+    char x;
+    char g;
+    scanf("%c",&g);
+    scanf("%c",&x);
+    return x;
+}
+
 void gridsizeq(){
     promptEnterGridSize ();
     gridsize = inputer();
@@ -460,41 +470,32 @@ int chooselocation(){
 int  main (int argc, char* argv[])
 {
     // ENTER THE CODE OF YOUR main FUNCTION BELOW
-    newGame(gridsize,winlength);
-    int r;
-    length = winlength;
-    do{
-        go();
+    char playagain;
+    do {
+        newGame(gridsize, winlength);
+        int r;
+        length = winlength;
         do {
-            promptChooseLocation(symbol);
-            chooselocation();
-            r = makeMove(row, col, symbol);
-        }while(r != 1);
-        showGrid();
-        t++;
-        r = boardIsFull();
-        if (r == 1)
-            end = 1;
-        r = playerHasWon(symbol, length);
-        if (r==1)
-            end = 1;
-        /*r = checkHorizontal(symbol, length);
-        if (r == 1) {
-            end = 1;
-            showWinMessage(symbol);
-        }
-        r = checkVertical(symbol, length);
-        if (r == 1) {
-            end = 1;
-            showWinMessage(symbol);
-        }
-        r = checkDiagonals(symbol, length);
-        if (r == 1) {
-            end = 1;
-        }*/
-
-    }while (end != 1);
-
+            go();
+            do {
+                promptChooseLocation(symbol);
+                chooselocation();
+                r = makeMove(row, col, symbol);
+            } while (r != 1);
+            showGrid();
+            t++;
+            r = boardIsFull();
+            if (r == 1) {
+                showGameOverMessage();
+                end = 1;
+            }
+            r = playerHasWon(symbol, length);
+            if (r == 1)
+                end = 1;
+        } while (end != 1);
+        promptNextOrExit ();
+        playagain = inputertext();
+    }while (playagain == 'n');
 
 
 
