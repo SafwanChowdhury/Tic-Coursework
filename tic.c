@@ -471,7 +471,7 @@ void gridsizeq(){
 
 }
 
-void winlengthq(gridsize){
+void winlengthq(){
     promptEnterWinLength (gridsize);
     winlength = inputer();
     while (winlength < 3 || winlength > gridsize){
@@ -519,7 +519,7 @@ int  main (int argc, char* argv[])
     int r;
     do {
         gridsizeq();
-        winlengthq(gridsize);
+        winlengthq();
         r = newGame(gridsize, winlength);
         if (r == 0){
             showErrIndex();
