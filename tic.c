@@ -428,7 +428,6 @@ int playerHasWon (char symbol , int length)
     d = checkDiagonals(symbol,length);
     ad = checkAntiDiagonals(symbol,length);
     if (h == 1 || v == 1 || d == 1 || ad == 1){
-        showWinMessage(symbol);
         return 1;
     }
     else if (h == 0|| v==0 || d == 0 || ad == 0)
@@ -454,6 +453,7 @@ int playerHasWon (char symbol , int length)
 // It returns -1 if any of the parameters have an invalid value.
 int effPlayerHasWon (int row, int col, char symbol , int length)
 {
+
     return -1;
 }
 
@@ -516,11 +516,11 @@ void go() {
 
 int chooselocation(){
     scanf("%i,%i",&row,&col);
-    /*if (row > gridsize || col > gridsize || row < 0 || col < 0) {
+    if (row > gridsize || col > gridsize || row < 0 || col < 0) {
         printf("\n");
         showErrIndex();
         chooselocation();
-    }*/
+    }
     return row;
 }
 
@@ -558,6 +558,7 @@ int  main (int argc, char* argv[])
             do {
                 r = playerHasWon(symbol, length);
                 if (r == 1)
+                    showWinMessage(symbol);
                     end = 1;
             }while(r == -1);
         } while (end != 1);
