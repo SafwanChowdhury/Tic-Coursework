@@ -453,7 +453,119 @@ int playerHasWon (char symbol , int length)
 // It returns -1 if any of the parameters have an invalid value.
 int effPlayerHasWon (int row, int col, char symbol , int length)
 {
-
+    length = z;
+    int i = row;
+    int j = col;
+    int count = 0;
+    int r;
+    //horizonal
+    if (j < gridsize) {
+        while (j < gridsize) {
+            r = check(row,col,symbol);
+            if (r == 1) {
+                count++;
+                printf("Count: %i Coords: %i,%i \n", count, i, j);
+                j++;
+            } else if (r == 0)
+                break;
+            else
+                break;
+        }
+    }
+    if (count != length) {
+        i = row;
+        j = col - 1;
+        if (j >= 0) {
+            while (j >= 0) {
+                r = check(row,col,symbol);
+                if (r == 1) {
+                    count++;
+                    printf("Count2: %i Coords: %i,%i \n", count, i, j);
+                    j--;
+                } else if (r == 0)
+                    break;
+                else
+                    break;
+            }
+        }
+    }
+    if (count == length)
+        return 1;
+    //vertical
+    count = 0;
+    if (count!= length) {
+        if (i < gridsize) {
+            while (i < gridsize) {
+                r = check(row,col,symbol);
+                if (r == 1) {
+                    count++;
+                    printf("Count vert: %i Coords: %i,%i \n", count, i, j);
+                    i++;
+                } else if (r == 0)
+                    break;
+                else
+                    break;
+            }
+        }
+    }
+    if (count != length) {
+        i = row - 1;
+        j = col;
+        if (i >= 0) {
+            while (i >= 0) {
+                r = check(row,col,symbol);
+                if (r == 1) {
+                    count++;
+                    printf("Count vert 2: %i Coords: %i,%i \n", count, i, j);
+                    i--;
+                } else if (r == 0)
+                    break;
+                else
+                    break;
+            }
+        }
+    }
+    if (count == length)
+        return 1;
+    //Diagonal
+    count = 0;
+    if (count!= length) {
+        if (i < gridsize && j < gridsize) {
+            while (i < gridsize && j < gridsize) {
+                printf("..\n");
+                r = check(row,col,symbol);
+                if (r == 1) {
+                    count++;
+                    printf("Count diag: %i Coords: %i,%i \n", count, i, j);
+                    i++;
+                    j++;
+                } else if (r == 0)
+                    break;
+                else
+                    break;
+            }
+        }
+    }
+    if (count != length) {
+        i = row - 1;
+        j = col - 1;
+        if (i >= 0 && j >= 0) {
+            while (i >= 0 && j>= 0) {
+                r = check(row,col,symbol);
+                if (r == 1) {
+                    count++;
+                    printf("Count diag 2: %i Coords: %i,%i \n", count, i, j);
+                    i--;
+                    j--;
+                } else if (r == 0)
+                    break;
+                else
+                    break;
+            }
+        }
+    }
+    if (count == length)
+        return 1;
     return -1;
 }
 
@@ -557,9 +669,10 @@ int  main (int argc, char* argv[])
             }
             do {
                 r = playerHasWon(symbol, length);
-                if (r == 1)
+                if (r == 1){
                     showWinMessage(symbol);
                     end = 1;
+                    }
             }while(r == -1);
         } while (end != 1);
         promptNextOrExit ();
