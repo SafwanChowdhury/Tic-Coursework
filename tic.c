@@ -125,6 +125,11 @@ int row;
 int col;
 int end = 0;
 int length;
+int x;
+int y;
+int z;
+int o;
+int p;
 
 // END OF SECTION FOR DECLARRING ADDITIONAL GLOBAL VARIABLES
 // ----------------------------------------------------------
@@ -155,6 +160,9 @@ int newGame (int gridsize, int winlength)
     for (int i=0; i<gridsize; i++)
         for (int j=0; j<gridsize; j++)
             grid[i][j] = empty;
+    x = gridsize;
+    y = winlength;
+    z = length;
     return 1;
 }
 
@@ -168,6 +176,8 @@ int newGame (int gridsize, int winlength)
 // There is one empty line after the grid to make it stand out from text after it
 void showGrid ()
 {
+    gridsize = x;
+    length = z;
     printf("\n\t");
     for(int i = 0; i < gridsize; i++){
         printf("%i ", i);
@@ -197,8 +207,13 @@ void showGrid ()
 // my solution is 4 lines only
 int makeMove(int row, int col, char symbol)
 {
-
-    if (grid[row][col] != '.'){
+    gridsize = x;
+    winlength = y;
+    if (row < 0 || row > gridsize || col < 0 || col > gridsize){
+        showErrIndex();
+        return 0;
+    }
+    else if (grid[row][col] != '.'){
         showErrTaken();
         return 0;
     }
@@ -211,6 +226,7 @@ int makeMove(int row, int col, char symbol)
 // my solution is 5 lines
 int boardIsFull()
 {
+    gridsize = x;
     int counter = 0;
     for (int i = 0; i < gridsize; i++) {
         for (int j = 0; j < gridsize; j++) {
@@ -233,11 +249,30 @@ int boardIsFull()
 // If any of the parameters is invalid the function should return -1 indicating failure to make a move
 int checkHorizontal (char symbol, int length)
 {
+    gridsize = x;
+    if (length < 3 || length > gridsize){
+        showErrIndex();
+        return -1;
+    }
+    else if (symbol != 'X' && symbol != 'O'){
+        showErrIndex();
+        return -1;
+    }
     int counter = 0;
-    for (int j = 0 ;j < gridsize; j++) {
-        if (grid[row][j] == symbol) {
-            counter++;
+    for (int i = 0; i < gridsize; i++) {
+        counter = 0;
+        for (int j = 0; j < gridsize; j++) {
+            if (grid[i][j] != symbol) {
+                counter = 0;
+            }
+            else if (grid[i][j] == symbol) {
+                counter++;
+            }
+            if (counter == length)
+                break;
         }
+        if (counter == length)
+            break;
     }
     if (counter == length)
         return 1;
@@ -254,15 +289,33 @@ int checkHorizontal (char symbol, int length)
 // If any of the parameters is invalid the function should return -1 indicating failure to make a move
 int checkVertical (char symbol, int length)
 {
+    gridsize = x;
+    if (length < 3 || length > gridsize){
+        showErrIndex();
+        return -1;
+    }
+    else if (symbol != 'X' && symbol != 'O'){
+        showErrIndex();
+        return -1;
+    }
     int counter = 0;
-    for (int j = 0 ;j < gridsize; j++) {
-        if (grid[j][col] == symbol) {
-            counter++;
+    for (int j = 0; j < gridsize; j++) {
+        counter = 0;
+        for (int i = 0; i < gridsize; i++) {
+            if (grid[i][j] != symbol) {
+                counter = 0;
+            }
+            else if (grid[i][j] == symbol) {
+                counter++;
+            }
+            if (counter == length)
+                break;
         }
+        if (counter == length)
+            break;
     }
-    if (counter == length){
+    if (counter == length)
         return 1;
-    }
     else if (counter != length)
         return 0;
     return -1;
@@ -276,34 +329,50 @@ int checkVertical (char symbol, int length)
 // If any of the parameters is invalid the function should return -1 indicating failure to make a move
 int checkDiagonals (char symbol, int length)
 {
+    gridsize = x;
+    if (length < 3 || length > gridsize){
+        showErrIndex();
+        return -1;
+    }
     int counter = 0;
-    for (int k = 0; k < (3*2)-1; k++){
-        for (int j = 0; j<= k; j++){
-            int i = k-j;
-            if (grid[i][j] == symbol)
+    for(int i = 0; i < (gridsize*2)-1; i++){
+        counter = 0;
+        int starti = i;
+        int startc = gridsize-1;
+        while(starti < (gridsize*2)-1 && startc >= 0){
+            if (grid[starti][startc] != symbol)
+                counter = 0;
+            if (grid[starti][startc] == symbol)
                 counter++;
             if (counter == length)
                 break;
+            startc--;
+            starti--;
         }
         if (counter == length)
             break;
-        counter = 0;
     }
-    for (int k = 0; k < (3*2)-1; k++){
-        for (int j = 0; j<= k; j++){
-            int i = k-j;
-            if (grid[j][i] == symbol)
-                counter++;
-            if (counter == length)
+    int counter2;
+    for(int i = 0; i < (gridsize*2)-1; i++){
+        counter2 = 0;
+        int starti = i;
+        int startc = gridsize-1;
+        while(starti < (gridsize*2)-1 && startc >= 0){
+            if (grid[startc][starti] != symbol)
+                counter = 0;
+            else if (grid[startc][starti] == symbol)
+                counter2++;
+            if (counter2 == length)
                 break;
+            startc--;
+            starti--;
         }
-        if (counter == length)
+        if (counter2 == length)
             break;
-        counter = 0;
     }
-    if (counter == length)
+    if (counter == length || counter2 == length)
         return 1;
-    else if (counter != length)
+    else if (counter != length && counter2 != length)
         return 0;
     return -1;
 }
@@ -316,40 +385,46 @@ int checkDiagonals (char symbol, int length)
 // If any of the parameters is invalid the function should return -1 indicating an failure to make a move
 int checkAntiDiagonals (char symbol, int length)
 {
+    gridsize = x;
+    if (length < 3 || length > gridsize){
+        showErrIndex();
+        return -1;
+    }
     int counter = 0;
-    for(int i = 0; i < (gridsize*2)-1; i++){
-        counter = 0;
-        int starti = i;
-        int startc = gridsize-1;
-        while(starti < (gridsize*2)-1 && startc >= 0){
-            if (grid[starti][startc] == symbol)
+    for (int k = 0; k < (gridsize*2)-1; k++){
+        for (int j = 0; j<= k; j++){
+            int i = k-j;
+            if (grid[i][j] == symbol) {
                 counter++;
-            startc--;
-            starti--;
+            }
+            else if (grid[i][j] != symbol)
+                counter = 0;
             if (counter == length)
                 break;
         }
         if (counter == length)
             break;
-    }
-    for(int i = 0; i < (gridsize*2)-1; i++){
         counter = 0;
-        int starti = i;
-        int startc = gridsize-1;
-        while(starti < (gridsize*2)-1 && startc >= 0){
-            if (grid[startc][starti] == symbol)
-                counter++;
-            startc--;
-            starti--;
-            if (counter == length)
+    }
+    int counter2 = 0;
+    for (int k = 0; k < (gridsize*2)-1; k++){
+        for (int j = 0; j<= k; j++){
+            int i = k-j;
+            if (grid[j][i] == symbol) {
+                counter2++;
+            }
+            else if (grid[j][i] != symbol)
+                counter2=0;
+            if (counter2 == length)
                 break;
         }
-        if (counter == length)
+        if (counter2 == length)
             break;
+        counter2 = 0;
     }
-    if (counter == length)
+    if (counter == length || counter2 == length)
         return 1;
-    else if (counter != length)
+    else if (counter != length && counter2 != length)
         return 0;
     return -1;
 }
@@ -363,6 +438,7 @@ int checkAntiDiagonals (char symbol, int length)
 // my solution is 5 lines
 int playerHasWon (char symbol , int length)
 {
+    gridsize = x;
     int h;
     int v;
     int d;
@@ -501,9 +577,11 @@ int  main (int argc, char* argv[])
                 showGameOverMessage();
                 end = 1;
             }
-            r = playerHasWon(symbol, length);
-            if (r == 1)
-                end = 1;
+            do {
+                r = playerHasWon(symbol, length);
+                if (r == 1)
+                    end = 1;
+            }while(r == -1);
         } while (end != 1);
         promptNextOrExit ();
         playagain = inputertext();
