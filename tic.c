@@ -338,10 +338,12 @@ int checkDiagonals (char symbol, int length)
         int starti = i;
         int startc = gridsize-1;
         while(starti < (gridsize*2)-1 && startc >= 0){
-            if (grid[starti][startc] != symbol)
-                counter = 0;
-            else if (grid[starti][startc] == symbol)
-                counter++;
+            if (starti >= 0 && startc >= 0 && starti <= gridsize -1 && startc <= gridsize - 1) {
+                if (grid[starti][startc] != symbol)
+                    counter = 0;
+                else if (grid[starti][startc] == symbol)
+                    counter++;
+            }
             startc--;
             starti--;
             if (counter == length)
@@ -374,11 +376,12 @@ int checkAntiDiagonals (char symbol, int length)
     for (int k = 0; k < (gridsize*2)-1; k++){
         for (int j = 0; j<= k; j++){
             int i = k-j;
-            if (grid[i][j] == symbol) {
-                counter++;
+            if (i >= 0 && j >= 0 && i <= gridsize -1 && j <= gridsize - 1) {
+                if (grid[i][j] == symbol) {
+                    counter++;
+                } else if (grid[i][j] != symbol)
+                    counter = 0;
             }
-            else if (grid[i][j] != symbol)
-                counter = 0;
             if (counter == length)
                 break;
         }
@@ -500,11 +503,11 @@ void go() {
 
 int chooselocation(){
     scanf("%i,%i",&row,&col);
-    if (row > gridsize || col > gridsize || row < 0 || col < 0) {
+    /*if (row > gridsize || col > gridsize || row < 0 || col < 0) {
         printf("\n");
         showErrIndex();
         chooselocation();
-    }
+    }*/
     return row;
 }
 
