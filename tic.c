@@ -155,8 +155,10 @@ int newGame (int gridsize, int winlength)
     length = winlength;
     char empty;
     empty = '.';
-    for (int i=0; i<gridsize; i++)
-        for (int j=0; j<gridsize; j++)
+    int i;
+    int j;
+    for (i=0; i<gridsize; i++)
+        for (j=0; j<gridsize; j++)
             grid[i][j] = empty;
     x = gridsize;
     y = winlength;
@@ -177,13 +179,15 @@ void showGrid ()
     gridsize = x;
     length = z;
     printf("\n\t");
-    for(int i = 0; i < gridsize; i++){
+    int i;
+    int j;
+    for(i = 0; i < gridsize; i++){
         printf("%i ", i);
     }
     printf("\n");
-    for(int i = 0; i < gridsize; i++){
+    for(i = 0; i < gridsize; i++){
         printf("%i\t", i);
-        for(int j = 0; j < gridsize; j++)
+        for(j = 0; j < gridsize; j++)
             printf("%c ",grid[i][j]);
         printf("\n");
     }
@@ -225,9 +229,11 @@ int makeMove(int row, int col, char symbol)
 int boardIsFull()
 {
     gridsize = x;
+    int i;
+    int j;
     int counter = 0;
-    for (int i = 0; i < gridsize; i++) {
-        for (int j = 0; j < gridsize; j++) {
+    for (i = 0; i < gridsize; i++) {
+        for (j = 0; j < gridsize; j++) {
             if (grid[i][j] == 'X' || grid[i][j] == 'O') {
                 counter++;
             }
@@ -248,6 +254,8 @@ int boardIsFull()
 int checkHorizontal (char symbol, int length)
 {
     gridsize = x;
+    int i;
+    int j;
     if (length < 3 || length > gridsize){
         showErrIndex();
         return -1;
@@ -257,9 +265,9 @@ int checkHorizontal (char symbol, int length)
         return -1;
     }
     int counter = 0;
-    for (int i = 0; i < gridsize; i++) {
+    for (i = 0; i < gridsize; i++) {
         counter = 0;
-        for (int j = 0; j < gridsize; j++) {
+        for (j = 0; j < gridsize; j++) {
             if (grid[i][j] != symbol) {
                 counter = 0;
             }
@@ -288,6 +296,8 @@ int checkHorizontal (char symbol, int length)
 int checkVertical (char symbol, int length)
 {
     gridsize = x;
+    int i;
+    int j;
     if (length < 3 || length > gridsize){
         showErrIndex();
         return -1;
@@ -297,9 +307,9 @@ int checkVertical (char symbol, int length)
         return -1;
     }
     int counter = 0;
-    for (int j = 0; j < gridsize; j++) {
+    for (j = 0; j < gridsize; j++) {
         counter = 0;
-        for (int i = 0; i < gridsize; i++) {
+        for (i = 0; i < gridsize; i++) {
             if (grid[i][j] != symbol) {
                 counter = 0;
             }
@@ -332,8 +342,9 @@ int checkDiagonals (char symbol, int length)
         showErrIndex();
         return -1;
     }
+    int i;
     int counter = 0;
-    for(int i = 0; i < (gridsize*2)-1; i++){
+    for(i = 0; i < (gridsize*2)-1; i++){
         counter = 0;
         int starti = i;
         int startc = gridsize-1;
@@ -373,8 +384,10 @@ int checkAntiDiagonals (char symbol, int length)
         return -1;
     }
     int counter = 0;
-    for (int k = 0; k < (gridsize*2)-1; k++){
-        for (int j = 0; j<= k; j++){
+    int j;
+    int k;
+    for (k = 0; k < (gridsize*2)-1; k++){
+        for (j = 0; j<= k; j++){
             int i = k-j;
             if (i >= 0 && j >= 0 && i <= gridsize -1 && j <= gridsize - 1) {
                 if (grid[i][j] == symbol) {
