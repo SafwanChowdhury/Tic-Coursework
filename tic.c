@@ -8,10 +8,10 @@ I confirm that the following code has been developed and written by me and it is
 I also confirm that I have not copied any parts of this program from another person or any other source or facilitated someone to copy this program from me.
 I confirm that I will not publish the program online or share it with anyone without permission of the module leader.
 
-Student Name:
-Student ID:
-Email:
-Date Work Commenced:
+Student Name: Safwan Chowdhury
+Student ID: 201328144
+Email: ed18src@leeds.ac.uk
+Date Work Commenced: 05/11/2020
 *************************************************************************/
 
 
@@ -128,8 +128,6 @@ int length;
 int x;
 int y;
 int z;
-int o;
-int p;
 
 // END OF SECTION FOR DECLARRING ADDITIONAL GLOBAL VARIABLES
 // ----------------------------------------------------------
@@ -473,7 +471,7 @@ void gridsizeq(){
 
 }
 
-void winlengthq(){
+void winlengthq(gridsize){
     promptEnterWinLength (gridsize);
     winlength = inputer();
     while (winlength < 3 || winlength > gridsize){
@@ -502,11 +500,11 @@ void go() {
 
 int chooselocation(){
     scanf("%i,%i",&row,&col);
-    /*if (row > gridsize || col > gridsize || row < 0 || col < 0) {
+    if (row > gridsize || col > gridsize || row < 0 || col < 0) {
         printf("\n");
         showErrIndex();
         chooselocation();
-    }*/
+    }
     return row;
 }
 
@@ -527,8 +525,6 @@ int  main (int argc, char* argv[])
             showErrIndex();
             continue;
         }
-       // intgrid();
-       // length = winlength;
         do {
             go();
             do {
