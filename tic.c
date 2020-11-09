@@ -8,10 +8,10 @@ I confirm that the following code has been developed and written by me and it is
 I also confirm that I have not copied any parts of this program from another person or any other source or facilitated someone to copy this program from me.
 I confirm that I will not publish the program online or share it with anyone without permission of the module leader.
 
-Student Name:
-Student ID:
-Email:
-Date Work Commenced:
+Student Name: Safwan Chowdhury
+Student ID: 201328144
+Email: ed18src@leeds.ac.uk
+Date Work Commenced: 05/11/2020
 *************************************************************************/
 
 
@@ -34,61 +34,61 @@ int __Check_Count; // do not use this variable, it is for the grader only
 // please use this function to prompt the user to enter the grid size to start a new game
 void promptEnterGridSize ()
 {
-  printf ("Enter grid size (3-10):");
+    printf ("Enter grid size (3-10):");
 }
 
 // please use this function to prompt the user to enter the winning length for the new game
 // the parameter represents the maximum winning length for this game
 void promptEnterWinLength (int max_win_length)
 {
-	printf ("Enter winning length (3-%i):", max_win_length);
+    printf ("Enter winning length (3-%i):", max_win_length);
 }
 
 // please use this function to prompt the user to enter the location of the symbol
 // this function takes as a parameter the symbol of the player to be prompted
 void promptChooseLocation (char symbol)
 {
-	printf ("Player %c, Choose Location (row,col): ", symbol);
+    printf ("Player %c, Choose Location (row,col): ", symbol);
 }
 
 // please use this function to show an error message when an index is out of range
 void showErrIndex ()
 {
-  printf ("Index out of range, please re-enter\n");
+    printf ("Index out of range, please re-enter\n");
 }
 
 // please use this function to show an error message when a location is already taken
 void showErrTaken ()
 {
-  printf ("This location is already taken\n");
+    printf ("This location is already taken\n");
 }
 
 // please use this function to show the win message at the end of the game
 // this function takes as parameter the symbol of the player who won the game
 void showWinMessage (char symbol)
 {
-	printf ("**************************\n");
-	printf ("Player %c has won the game\n", symbol);
-	printf ("**************************\n");
+    printf ("**************************\n");
+    printf ("Player %c has won the game\n", symbol);
+    printf ("**************************\n");
 }
 
 // please use this function to show a game over (draw) message at the end of the game
 void showGameOverMessage ()
 {
-	printf ("Game over; there are no winners\n");
+    printf ("Game over; there are no winners\n");
 }
 
 //  please use this function to prompt the user to choose if they want to play back the game (at the end of the game)
 void promptPlayBackGame ()
 {
-  printf ("\nWould you like to play back the recorded game? (y,n)?");
+    printf ("\nWould you like to play back the recorded game? (y,n)?");
 }
 
 // please use this function to prompt the user to answer with n (next) or e (exit)
 // to indicate if they want to proceed with the game's replay or exit the program
 void promptNextOrExit ()
 {
-  printf ("Next or Exit (n,e)?");
+    printf ("Next or Exit (n,e)?");
 }
 
 // You will use this function in effPlayerHasWon (see below).
@@ -97,16 +97,16 @@ void promptNextOrExit ()
 // Needless to say again, don't change this function
 int check (int row, int col, char symbol)
 {
-	__Check_Count++;
-	if (grid[row][col] == symbol)
-		return 1;
-	return 0;
+    __Check_Count++;
+    if (grid[row][col] == symbol)
+        return 1;
+    return 0;
 }
 
 // Used by the grader to peek at a certain cell in the grid. Don't use this function
 int peek (int row, int col)
 {
-	return grid[row][col];
+    return grid[row][col];
 }
 
 
@@ -116,8 +116,18 @@ int peek (int row, int col)
 // --------------------------------------------------------------------------------------------------
 // NOW IT IS YOUR TURN, YOU CAN DEFINE ANY OTHER GLOBAL VARIABLES YOU MAY NEED IN YOUR CODE BELOW THIS LINE
 
-
-
+int gridsize;
+int winlength;
+int gridc[10][10];
+char symbol;
+int t = 0;
+int row;
+int col;
+int end = 0;
+int length;
+int x;
+int y;
+int z;
 
 // END OF SECTION FOR DECLARRING ADDITIONAL GLOBAL VARIABLES
 // ----------------------------------------------------------
@@ -139,7 +149,21 @@ int peek (int row, int col)
 // If everything is correct the function returns 1 indicating success in initialising the game.
 int newGame (int gridsize, int winlength)
 {
-	return -99;
+    if (gridsize < 3 || gridsize > 10 || winlength < 3 || winlength > gridsize)
+        return 0;
+    t = 0;
+    length = winlength;
+    char empty;
+    empty = '.';
+    int i;
+    int j;
+    for (i=0; i<gridsize; i++)
+        for (j=0; j<gridsize; j++)
+            grid[i][j] = empty;
+    x = gridsize;
+    y = winlength;
+    z = length;
+    return 1;
 }
 
 // The purpose of this function is to show the game's grid on the screen
@@ -152,7 +176,22 @@ int newGame (int gridsize, int winlength)
 // There is one empty line after the grid to make it stand out from text after it
 void showGrid ()
 {
-
+    gridsize = x;
+    length = z;
+    printf("\n\t");
+    int i;
+    int j;
+    for(i = 0; i < gridsize; i++){
+        printf("%i ", i);
+    }
+    printf("\n");
+    for(i = 0; i < gridsize; i++){
+        printf("%i\t", i);
+        for(j = 0; j < gridsize; j++)
+            printf("%c ",grid[i][j]);
+        printf("\n");
+    }
+    printf("\n");
 
 }
 
@@ -170,7 +209,18 @@ void showGrid ()
 // my solution is 4 lines only
 int makeMove(int row, int col, char symbol)
 {
-    return -99;
+    gridsize = x;
+    winlength = y;
+    if (row < 0 || row > gridsize || col < 0 || col > gridsize){
+        showErrIndex();
+        return 0;
+    }
+    else if (grid[row][col] != '.'){
+        showErrTaken();
+        return 0;
+    }
+    grid[row][col] = symbol;
+    return 1;
 }
 
 // This function is used to check if the board is full, i.e. every location in the grid is filled with either X or O
@@ -178,7 +228,21 @@ int makeMove(int row, int col, char symbol)
 // my solution is 5 lines
 int boardIsFull()
 {
-	return -99;
+    gridsize = x;
+    int i;
+    int j;
+    int counter = 0;
+    for (i = 0; i < gridsize; i++) {
+        for (j = 0; j < gridsize; j++) {
+            if (grid[i][j] == 'X' || grid[i][j] == 'O') {
+                counter++;
+            }
+        }
+    }
+    if (counter == (gridsize*gridsize)) {
+        return 1;
+    }
+    return 0;
 }
 
 
@@ -189,7 +253,38 @@ int boardIsFull()
 // If any of the parameters is invalid the function should return -1 indicating failure to make a move
 int checkHorizontal (char symbol, int length)
 {
-	return -99;
+    gridsize = x;
+    int i;
+    int j;
+    if (length < 3 || length > gridsize){
+        showErrIndex();
+        return -1;
+    }
+    else if (symbol != 'X' && symbol != 'O'){
+        showErrIndex();
+        return -1;
+    }
+    int counter = 0;
+    for (i = 0; i < gridsize; i++) {
+        counter = 0;
+        for (j = 0; j < gridsize; j++) {
+            if (grid[i][j] != symbol) {
+                counter = 0;
+            }
+            else if (grid[i][j] == symbol) {
+                counter++;
+            }
+            if (counter == length)
+                break;
+        }
+        if (counter == length)
+            break;
+    }
+    if (counter == length)
+        return 1;
+    else if (counter != length)
+        return 0;
+    return -1;
 }
 
 
@@ -200,7 +295,38 @@ int checkHorizontal (char symbol, int length)
 // If any of the parameters is invalid the function should return -1 indicating failure to make a move
 int checkVertical (char symbol, int length)
 {
-	return -99;
+    gridsize = x;
+    int i;
+    int j;
+    if (length < 3 || length > gridsize){
+        showErrIndex();
+        return -1;
+    }
+    else if (symbol != 'X' && symbol != 'O'){
+        showErrIndex();
+        return -1;
+    }
+    int counter = 0;
+    for (j = 0; j < gridsize; j++) {
+        counter = 0;
+        for (i = 0; i < gridsize; i++) {
+            if (grid[i][j] != symbol) {
+                counter = 0;
+            }
+            else if (grid[i][j] == symbol) {
+                counter++;
+            }
+            if (counter == length)
+                break;
+        }
+        if (counter == length)
+            break;
+    }
+    if (counter == length)
+        return 1;
+    else if (counter != length)
+        return 0;
+    return -1;
 }
 
 // This function is used to check if there is any diagonal line in the grid that contains a consecutive sequence of the same symbol
@@ -211,7 +337,37 @@ int checkVertical (char symbol, int length)
 // If any of the parameters is invalid the function should return -1 indicating failure to make a move
 int checkDiagonals (char symbol, int length)
 {
-	return -99;
+    gridsize = x;
+    if (length < 3 || length > gridsize){
+        showErrIndex();
+        return -1;
+    }
+    int i;
+    int counter = 0;
+    for(i = 0; i < (gridsize*2)-1; i++){
+        counter = 0;
+        int starti = i;
+        int startc = gridsize-1;
+        while(starti < (gridsize*2)-1 && startc >= 0){
+            if (starti >= 0 && startc >= 0 && starti <= gridsize -1 && startc <= gridsize - 1) {
+                if (grid[starti][startc] != symbol)
+                    counter = 0;
+                else if (grid[starti][startc] == symbol)
+                    counter++;
+            }
+            startc--;
+            starti--;
+            if (counter == length)
+                break;
+        }
+        if (counter == length)
+            break;
+    }
+    if (counter == length)
+        return 1;
+    else if (counter != length)
+        return 0;
+    return -1;
 }
 
 // This function is used to check if there is any anti-diagonal (reverse diagonal) section in the grid that contains a consecutive sequence of the same symbol
@@ -222,7 +378,35 @@ int checkDiagonals (char symbol, int length)
 // If any of the parameters is invalid the function should return -1 indicating an failure to make a move
 int checkAntiDiagonals (char symbol, int length)
 {
-	return -99;
+    gridsize = x;
+    if (length < 3 || length > gridsize){
+        showErrIndex();
+        return -1;
+    }
+    int counter = 0;
+    int j;
+    int k;
+    for (k = 0; k < (gridsize*2)-1; k++){
+        for (j = 0; j<= k; j++){
+            int i = k-j;
+            if (i >= 0 && j >= 0 && i <= gridsize -1 && j <= gridsize - 1) {
+                if (grid[i][j] == symbol) {
+                    counter++;
+                } else if (grid[i][j] != symbol)
+                    counter = 0;
+            }
+            if (counter == length)
+                break;
+        }
+        if (counter == length)
+            break;
+        counter = 0;
+    }
+    if (counter == length)
+        return 1;
+    else if (counter != length)
+        return 0;
+    return -1;
 }
 
 
@@ -234,7 +418,21 @@ int checkAntiDiagonals (char symbol, int length)
 // my solution is 5 lines
 int playerHasWon (char symbol , int length)
 {
-		return -99;
+    gridsize = x;
+    int h;
+    int v;
+    int d;
+    int ad;
+    h = checkHorizontal(symbol,length);
+    v = checkVertical(symbol,length);
+    d = checkDiagonals(symbol,length);
+    ad = checkAntiDiagonals(symbol,length);
+    if (h == 1 || v == 1 || d == 1 || ad == 1){
+        return 1;
+    }
+    else if (h == 0|| v==0 || d == 0 || ad == 0)
+        return 0;
+    return -1;
 }
 
 // Do you think the above function (playerHasWon) is the most efficient way of detecting a win?
@@ -255,14 +453,76 @@ int playerHasWon (char symbol , int length)
 // It returns -1 if any of the parameters have an invalid value.
 int effPlayerHasWon (int row, int col, char symbol , int length)
 {
-	return -99;
+
+    return -1;
 }
 
 // IF YOU NEED ADDITIONAL FUNCTIONS YOU CAN DEFINE THEM BELOW THIS LINE
 //----------------------------------------------------------------------
 
+int inputer()
+{
+    int x;
+    scanf("%i",&x);
+    return x;
+}
 
+int inputertext()
+{
+    char x;
+    char g;
+    scanf("%c",&g);
+    scanf("%c",&x);
+    return x;
+}
 
+void gridsizeq(){
+    promptEnterGridSize ();
+    gridsize = inputer();
+    while (gridsize < 3 || gridsize > 10){
+        showErrIndex();
+        promptEnterGridSize ();
+        gridsize = inputer();
+    }
+
+}
+
+void winlengthq(){
+    promptEnterWinLength (gridsize);
+    winlength = inputer();
+    while (winlength < 3 || winlength > gridsize){
+        showErrIndex();
+        promptEnterWinLength (gridsize);
+        winlength = inputer();
+    }
+
+}
+
+/*void intgrid()
+{
+    char empty;
+    empty = '.';
+    for (int i=0; i<gridsize; i++)
+        for (int j=0; j<gridsize; j++)
+            grid[i][j] = empty;
+}*/
+
+void go() {
+    if ((t % 2) == 0)
+        symbol = 'X';
+    else
+        symbol = 'O';
+}
+
+int chooselocation(){
+    scanf("%i,%i",&row,&col);
+    if (row > gridsize || col > gridsize || row < 0 || col < 0) {
+        printf("\n");
+        showErrIndex();
+        chooselocation();
+    }
+    return row;
+}
 
 
 
@@ -270,14 +530,49 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
 #ifndef TEST
 int  main (int argc, char* argv[])
 {
-	// ENTER THE CODE OF YOUR main FUNCTION BELOW
+    // ENTER THE CODE OF YOUR main FUNCTION BELOW
+    char playagain;
+    int r;
+    do {
+        gridsizeq();
+        winlengthq();
+        r = newGame(gridsize, winlength);
+        if (r == 0){
+            showErrIndex();
+            continue;
+        }
+        do {
+            go();
+            do {
+                promptChooseLocation(symbol);
+                chooselocation();
+                r = makeMove(row, col, symbol);
+            } while (r != 1);
+            showGrid();
+            t++;
+            r = boardIsFull();
+            if (r == 1) {
+                showGameOverMessage();
+                end = 1;
+            }
+            do {
+                r = playerHasWon(symbol, length);
+                if (r == 1)
+                    showWinMessage(symbol);
+                    end = 1;
+            }while(r == -1);
+        } while (end != 1);
+        promptNextOrExit ();
+        playagain = inputertext();
+    }while (playagain == 'n');
+
 
 
 
 
 
 // DON'T CHANGE THE FOLLOWING 3 LINES
-  return 0;
+    return 0;
 }
 #endif
 // DON'T WRITE ANYTHING BELOW THIS LINE
