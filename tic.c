@@ -342,37 +342,19 @@ int checkDiagonals (char symbol, int length)
         while(starti < (gridsize*2)-1 && startc >= 0){
             if (grid[starti][startc] != symbol)
                 counter = 0;
-            if (grid[starti][startc] == symbol)
+            else if (grid[starti][startc] == symbol)
                 counter++;
-            if (counter == length)
-                break;
             startc--;
             starti--;
+            if (counter == length)
+                break;
         }
         if (counter == length)
             break;
     }
-    int counter2;
-    for(int i = 0; i < (gridsize*2)-1; i++){
-        counter2 = 0;
-        int starti = i;
-        int startc = gridsize-1;
-        while(starti < (gridsize*2)-1 && startc >= 0){
-            if (grid[startc][starti] != symbol)
-                counter = 0;
-            else if (grid[startc][starti] == symbol)
-                counter2++;
-            if (counter2 == length)
-                break;
-            startc--;
-            starti--;
-        }
-        if (counter2 == length)
-            break;
-    }
-    if (counter == length || counter2 == length)
+    if (counter == length)
         return 1;
-    else if (counter != length && counter2 != length)
+    else if (counter != length)
         return 0;
     return -1;
 }
@@ -406,25 +388,9 @@ int checkAntiDiagonals (char symbol, int length)
             break;
         counter = 0;
     }
-    int counter2 = 0;
-    for (int k = 0; k < (gridsize*2)-1; k++){
-        for (int j = 0; j<= k; j++){
-            int i = k-j;
-            if (grid[j][i] == symbol) {
-                counter2++;
-            }
-            else if (grid[j][i] != symbol)
-                counter2=0;
-            if (counter2 == length)
-                break;
-        }
-        if (counter2 == length)
-            break;
-        counter2 = 0;
-    }
-    if (counter == length || counter2 == length)
+    if (counter == length)
         return 1;
-    else if (counter != length && counter2 != length)
+    else if (counter != length)
         return 0;
     return -1;
 }
