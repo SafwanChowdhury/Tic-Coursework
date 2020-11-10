@@ -579,8 +579,10 @@ void intgrid()
 {
     char empty;
     empty = '.';
-    for (int i=0; i<gridsize; i++)
-        for (int j=0; j<gridsize; j++)
+    int i;
+    int j;
+    for (i=0; i<gridsize; i++)
+        for (j=0; j<gridsize; j++)
             gridc[i][j] = empty;
 }
 
