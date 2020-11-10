@@ -130,6 +130,7 @@ int length;
 int x;
 int y;
 int z;
+char playback;
 
 // END OF SECTION FOR DECLARRING ADDITIONAL GLOBAL VARIABLES
 // ----------------------------------------------------------
@@ -617,7 +618,6 @@ int chooselocation(){
 int  main (int argc, char* argv[])
 {
     // ENTER THE CODE OF YOUR main FUNCTION BELOW
-    char playback;
     char next;
     int r;
     char b;
@@ -658,41 +658,46 @@ int  main (int argc, char* argv[])
             int count = 0;
             intgrid();
             do {
-                if ((count % 2) == 0)
-                    symbol = 'X';
-                else
-                    symbol = 'O';
-                x = move[count][0];
-                y = move[count][1];
-                int i;
-                int j;
-                for(i=0;i<gridsize;i++){
-                    for(j=0;j<gridsize;j++){
-                        gridc[x][y] = symbol;
+                if (count != t) {
+                    if ((count % 2) == 0)
+                        symbol = 'X';
+                    else
+                        symbol = 'O';
+                    x = move[count][0];
+                    y = move[count][1];
+                    int i;
+                    int j;
+                    for (i = 0; i < gridsize; i++) {
+                        for (j = 0; j < gridsize; j++) {
+                            gridc[x][y] = symbol;
+                        }
                     }
-                }
-                printf("\n\t");
-                int i;
-                int j;
-                for(i = 0; i < gridsize; i++){
-                    printf("%i ", i);
-                }
-                printf("\n");
-                for(i = 0; i < gridsize; i++){
-                    printf("%i\t", i);
-                    for(j = 0; j < gridsize; j++)
-                        printf("%c ",gridc[i][j]);
+                    printf("\n\t");
+                    //int i;
+                    //int j;
+                    for (i = 0; i < gridsize; i++) {
+                        printf("%i ", i);
+                    }
                     printf("\n");
+                    for (i = 0; i < gridsize; i++) {
+                        printf("%i\t", i);
+                        for (j = 0; j < gridsize; j++)
+                            printf("%c ", gridc[i][j]);
+                        printf("\n");
+                    }
+                    count++;
                 }
-                printf("\n");
-                if (count == t-1) {
+                if (count == t) {
                     promptNextOrExit();
-                    scanf("%c", b);
+                    scanf("%c", &b);
                     next = 'e';
+                    playback = 'n';
+                    break;
                 }
-                count++;
-                promptNextOrExit();
-                next = inputertext();
+                else if(count != t) {
+                    promptNextOrExit();
+                    next = inputertext();
+                }
             } while (next == 'n');
         }
         else if (playback == 'n') {
