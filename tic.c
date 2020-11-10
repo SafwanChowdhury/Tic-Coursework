@@ -601,7 +601,6 @@ int chooselocation(){
     promptChooseLocation(symbol);
     scanf("%i,%i",&row,&col);
     if (row >= gridsize || col >= gridsize || row < 0 || col < 0) {
-        printf("\n");
         showErrIndex();
         chooselocation();
     }
@@ -693,7 +692,6 @@ int  main (int argc, char* argv[])
             } while (next == 'n');
         }
         else if (playback == 'n') {
-            printf("\n");
             break;
         }
     }while(playback != 'n');
