@@ -118,16 +118,19 @@ int peek (int row, int col)
 
 int gridsize;
 int winlength;
-int gridc[10][10];
+int move[100][2];
 char symbol;
+char gridc[10][10];
 int t = 0;
 int row;
 int col;
 int end = 0;
+int e;
 int length;
 int x;
 int y;
 int z;
+char playback;
 
 // END OF SECTION FOR DECLARRING ADDITIONAL GLOBAL VARIABLES
 // ----------------------------------------------------------
@@ -453,7 +456,81 @@ int playerHasWon (char symbol , int length)
 // It returns -1 if any of the parameters have an invalid value.
 int effPlayerHasWon (int row, int col, char symbol , int length)
 {
+    /*length = z;
+    int i = row;
+    int j = col;
+    int l;
+    int k;
+    int count = 0;
+    int r;
+    e = 0;
+    do{
+        printf("DO\n");
+        l = col + 1;
+        k = col - 1;
+        printf("%i,%i || %i,%i\n",i,l,i,k);
+        if(grid[i][l] == symbol || grid[i][k] == symbol) {
+            printf("Enter Check\n");
+            count = 0;
+            for (j = row;j<gridsize;j++) {
+                r = check(row,col,symbol);
+                if (r == 1) {
+                    count++;
+                    printf("Count: %i Coords: %i,%i Checks: %i",count,i,j,__Check_Count);
+                }
+                else if (count == length) {
+                    e = 1;
+                    break;
+                }
+                else if(r == 0)
+                    break;
+            }
+            for (j = row-1;j<gridsize;j--) {
+                if (r == 1){
+                    count++;
+                    printf("Count: %i Coords: %i,%i Checks: %i",count,i,j,__Check_Count);
+                }
+                else if (count == length) {
+                    e = 1;
+                    break;
+                }
+                else if(r == 0)
+                    break;
+            }
+            if (count == length){
+                e = 1;
+                break;
+            }
+        }
+        else {
+            printf("End\n");
+            e = 1;
+        }
+    }while (e == 0);
+    if (count == length)
+        return 1;
+        /*if (grid[i+1][j] == symbol)
+            //opt = 3;
+        if (grid[i-1][j]);//down
+        grid[i+1][j+1]//topright
+        grid[i+1][j-1]//topleft
+        grid[i-1][j+1]//bottomright
+        grid[i-1][j+1]//bottomleft
 
+    switch ()
+    {
+        case 1 :
+            printf ("");
+            break;
+        case 6 :
+            printf ("");
+            break;
+        case 7:
+            printf ("");
+            break;
+        default :
+            printf ("");
+    }*/
     return -1;
 }
 
@@ -498,14 +575,17 @@ void winlengthq(){
 
 }
 
-/*void intgrid()
+
+void intgrid()
 {
     char empty;
     empty = '.';
-    for (int i=0; i<gridsize; i++)
-        for (int j=0; j<gridsize; j++)
-            grid[i][j] = empty;
-}*/
+    int i;
+    int j;
+    for (i=0; i<gridsize; i++)
+        for (j=0; j<gridsize; j++)
+            gridc[i][j] = empty;
+}
 
 void go() {
     if ((t % 2) == 0)
@@ -514,10 +594,16 @@ void go() {
         symbol = 'O';
 }
 
+void mem(){
+    move[t][0] = row;
+    move[t][1] = col;
+
+}
+
 int chooselocation(){
+    promptChooseLocation(symbol);
     scanf("%i,%i",&row,&col);
-    if (row > gridsize || col > gridsize || row < 0 || col < 0) {
-        printf("\n");
+    if (row >= gridsize || col >= gridsize || row < 0 || col < 0) {
         showErrIndex();
         chooselocation();
     }
@@ -526,29 +612,32 @@ int chooselocation(){
 
 
 
+
 // DON'T CHANGE THE FOLLOWING 3 LINES
 #ifndef TEST
 int  main (int argc, char* argv[])
 {
     // ENTER THE CODE OF YOUR main FUNCTION BELOW
-    char playagain;
+    char next;
     int r;
+    char b;
     do {
         gridsizeq();
         winlengthq();
         r = newGame(gridsize, winlength);
-        if (r == 0){
+        if (r == 0) {
             showErrIndex();
             continue;
         }
+        showGrid();
         do {
             go();
             do {
-                promptChooseLocation(symbol);
                 chooselocation();
                 r = makeMove(row, col, symbol);
             } while (r != 1);
             showGrid();
+            mem();
             t++;
             r = boardIsFull();
             if (r == 1) {
@@ -557,14 +646,65 @@ int  main (int argc, char* argv[])
             }
             do {
                 r = playerHasWon(symbol, length);
-                if (r == 1)
+                if (r == 1) {
                     showWinMessage(symbol);
                     end = 1;
-            }while(r == -1);
+                }
+            } while (r == -1);
         } while (end != 1);
-        promptNextOrExit ();
-        playagain = inputertext();
-    }while (playagain == 'n');
+        promptPlayBackGame();
+        playback = inputertext();
+        if (playback == 'y') {
+            int count = 0;
+            intgrid();
+            do {
+                if (count != t) {
+                    if ((count % 2) == 0)
+                        symbol = 'X';
+                    else
+                        symbol = 'O';
+                    x = move[count][0];
+                    y = move[count][1];
+                    int i;
+                    int j;
+                    for (i = 0; i < gridsize; i++) {
+                        for (j = 0; j < gridsize; j++) {
+                            gridc[x][y] = symbol;
+                        }
+                    }
+                    printf("\n\t");
+                    //int i;
+                    //int j;
+                    for (i = 0; i < gridsize; i++) {
+                        printf("%i ", i);
+                    }
+                    printf("\n");
+                    for (i = 0; i < gridsize; i++) {
+                        printf("%i\t", i);
+                        for (j = 0; j < gridsize; j++)
+                            printf("%c ", gridc[i][j]);
+                        printf("\n");
+                    }
+                    printf("\n");
+                    count++;
+                }
+                if (count == t) {
+                    promptNextOrExit();
+                    scanf("%c", &b);
+                    next = 'e';
+                    playback = 'n';
+                    break;
+                }
+                else if(count != t) {
+                    promptNextOrExit();
+                    next = inputertext();
+                }
+            } while (next == 'n');
+        }
+        else if (playback == 'n') {
+            break;
+        }
+    }while(playback != 'n');
 
 
 
