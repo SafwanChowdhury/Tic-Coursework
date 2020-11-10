@@ -628,6 +628,7 @@ int  main (int argc, char* argv[])
             showErrIndex();
             continue;
         }
+        showGrid();
         do {
             go();
             do {
