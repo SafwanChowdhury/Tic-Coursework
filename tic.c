@@ -670,8 +670,6 @@ int  main (int argc, char* argv[])
                     }
                 }
                 printf("\n\t");
-                int i;
-                int j;
                 for(i = 0; i < gridsize; i++){
                     printf("%i ", i);
                 }
