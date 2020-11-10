@@ -685,6 +685,7 @@ int  main (int argc, char* argv[])
                             printf("%c ", gridc[i][j]);
                         printf("\n");
                     }
+                    printf("\n");
                     count++;
                 }
                 if (count == t) {

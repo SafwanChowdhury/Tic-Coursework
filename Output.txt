@@ -57,34 +57,41 @@ Would you like to play back the recorded game? (y,n)?
 0	X . . 
 1	. . . 
 2	. . . 
+
 Next or Exit (n,e)?
 	0 1 2 
 0	X O . 
 1	. . . 
 2	. . . 
+
 Next or Exit (n,e)?
 	0 1 2 
 0	X O . 
 1	. X . 
 2	. . . 
+
 Next or Exit (n,e)?
 	0 1 2 
 0	X O . 
 1	. X . 
 2	. . O 
+
 Next or Exit (n,e)?
 	0 1 2 
 0	X O . 
 1	X X . 
 2	. . O 
+
 Next or Exit (n,e)?
 	0 1 2 
 0	X O O 
 1	X X . 
 2	. . O 
+
 Next or Exit (n,e)?
 	0 1 2 
 0	X O O 
 1	X X X 
 2	. . O 
+
 Next or Exit (n,e)?
