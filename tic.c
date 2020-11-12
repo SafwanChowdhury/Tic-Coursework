@@ -640,6 +640,44 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
             }
         }
     }
+    //-------AntiDiag--------
+    i = row;
+    j = col;
+    k = row - 1;
+    l = col + 1;
+    if (i == (gridsize-1) - j){
+        i = row;
+        j = col;
+        k = row - 1;
+        l = col + 1;
+        countr = 0;
+        for (i; i<gridsize;i++){
+            j = (gridsize -1) - i;
+            printf("Coords: %i,%i\n",i,j);
+            r = check(i,j,symbol);
+            if (r == 1)
+                countr++;
+            if (countr == length){
+                printf("Win\n");
+                return 1;
+            }
+            else if (r == 0)
+                break;
+        }
+        for (k; k>=0;k--){
+            l = (gridsize -1) - k;
+            printf("Coords 2: %i,%i\n",k,l);
+            r = check(k,l,symbol);
+            if (r == 1)
+                countr++;
+            if (countr == length){
+                printf("Win\n");
+                return 1;
+            }
+            else if (r == 0)
+                break;
+        }
+    }
     return 0;
 }
 
