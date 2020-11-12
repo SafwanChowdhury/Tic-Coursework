@@ -459,7 +459,10 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
     int i = row;
     int j = col;
     int k = col - 1;
+    int l = row - 1;
+    int r;
     int countr = 0;
+    int s;
     if (row < 0 || row > gridsize || col < 0 || col > gridsize || length < 3 || length > gridsize || symbol != 'X' && symbol != 'O'){
         showErrIndex();
         return -1;
@@ -498,7 +501,6 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
     countr = 0;
     for (i; i<gridsize;i++){
         printf("Coords: %i,%i\n",i,j);
-        int r;
         r = check(i,j,symbol);
         if (r == 1)
             countr++;
@@ -511,7 +513,6 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
     }
     for (k;k>=0;k--){
         printf("Coords 2: %i,%i\n",k,j);
-        int r;
         r = check(k,j,symbol);
         if (r == 1)
             countr++;
@@ -522,7 +523,124 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
         else if (r == 0)
             break;
     }
-
+    //---------DIAG----------
+    i = row;
+    j = col;
+    k = row - 1;
+    l = col - 1;
+    countr = 0;
+    if (i == j){
+        i = row;
+        j = col;
+        k = row - 1;
+        l = col - 1;
+        countr = 0;
+        printf("middle");
+        for (i; i<gridsize;i++){
+            j = i;
+            printf("Coords: %i,%i\n",i,j);
+            r = check(i,j,symbol);
+            if (r == 1)
+                countr++;
+            if (countr == 4){
+                printf("Win\n");
+                return 1;
+            }
+            else if (r == 0)
+                break;
+        }
+        for (k; k>=0;k++){
+            l = k;
+            printf("Coords 2: %i,%i\n",k,l);
+            r = check(k,l,symbol);
+            if (r == 1)
+                countr++;
+            if (countr == 4){
+                printf("Win\n");
+                return 1;
+            }
+            else if (r == 0)
+                break;
+        }
+    }
+        //------------
+    else if(j > i){
+        i = row;
+        j = col;
+        k = row - 1;
+        l = col - 1;
+        countr = 0;
+        s = j - i;
+        for (i; i<gridsize;i++){
+            j = i + s;
+            if (i < gridsize && j< gridsize){
+                printf("Coords 2.1: %i,%i\n",i,j);
+                r = check(i,j,symbol);
+                if (r == 1)
+                    countr++;
+                if (countr == 4){
+                    printf("Win\n");
+                    return 1;
+                }
+                else if (r == 0)
+                    break;
+            }
+        }
+        for (k; k>=0;k--){
+            l = k + s;
+            if (k >= 0 && l >= 0){
+                printf("Coords 2.2: %i,%i\n",k,l);
+                r = check(k,l,symbol);
+                if (r == 1)
+                    countr++;
+                if (countr == 4){
+                    printf("Win\n");
+                    return 1;
+                }
+                else if (r == 0)
+                    break;
+            }
+        }
+    }
+        //---------
+    else if(i > j){
+        i = row;
+        j = col;
+        k = row - 1;
+        l = col - 1;
+        countr = 0;
+        s = i - j;
+        for (i; i<gridsize && j<gridsize;i++){
+            j = i + s;
+            if (i < gridsize && j< gridsize){
+                printf("Coords 3.1: %i,%i\n",j,i);
+                r = check(j,i,symbol);
+                if (r == 1)
+                    countr++;
+                if (countr == 4){
+                    printf("Win\n");
+                    return 1;
+                }
+                else if (r == 0)
+                    break;
+            }
+        }
+        for (k; k>=0;k--){
+            l = k + s;
+            if (k >= 0 && l >= 0){
+                printf("Coords 3.2: %i,%i\n",l,k);
+                r = check(l,k,symbol);
+                if (r == 1)
+                    countr++;
+                if (countr == 4){
+                    printf("Win\n");
+                    return 1;
+                }
+                else if (r == 0)
+                    break;
+            }
+        }
+    }
     return 0;
 }
 
