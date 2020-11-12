@@ -456,82 +456,205 @@ int playerHasWon (char symbol , int length)
 // It returns -1 if any of the parameters have an invalid value.
 int effPlayerHasWon (int row, int col, char symbol , int length)
 {
-    /*length = z;
     int i = row;
     int j = col;
-    int l;
-    int k;
-    int count = 0;
+    int k = col - 1;
+    int l = row - 1;
     int r;
-    e = 0;
-    do{
-        printf("DO\n");
-        l = col + 1;
-        k = col - 1;
-        printf("%i,%i || %i,%i\n",i,l,i,k);
-        if(grid[i][l] == symbol || grid[i][k] == symbol) {
-            printf("Enter Check\n");
-            count = 0;
-            for (j = row;j<gridsize;j++) {
-                r = check(row,col,symbol);
-                if (r == 1) {
-                    count++;
-                    printf("Count: %i Coords: %i,%i Checks: %i",count,i,j,__Check_Count);
-                }
-                else if (count == length) {
-                    e = 1;
-                    break;
-                }
-                else if(r == 0)
-                    break;
+    int countr = 0;
+    int s;
+    if (row < 0 || row > gridsize || col < 0 || col > gridsize || length < 3 || length > gridsize || symbol != 'X' && symbol != 'O'){
+        showErrIndex();
+        return -1;
+    }
+    //---------HORIZ------------
+    for (j; j<gridsize;j++){
+        int r;
+        r = check(i,j,symbol);
+        if (r == 1)
+            countr++;
+        if (countr == length){
+            return 1;
+        }
+        else if (r == 0)
+            break;
+    }
+    for (k;k>=0;k--){
+        int r;
+        r = check(i,k,symbol);
+        if (r == 1)
+            countr++;
+        if (countr == length){
+            return 1;
+        }
+        else if (r == 0)
+            break;
+    }
+    //---------VERT----------
+    i = row;
+    j = col;
+    k = row - 1;
+    countr = 0;
+    for (i; i<gridsize;i++){
+        r = check(i,j,symbol);
+        if (r == 1)
+            countr++;
+        if (countr == length){
+            return 1;
+        }
+        else if (r == 0)
+            break;
+    }
+    for (k;k>=0;k--){
+        r = check(k,j,symbol);
+        if (r == 1)
+            countr++;
+        if (countr == length){
+            return 1;
+        }
+        else if (r == 0)
+            break;
+    }
+    //---------DIAG----------
+    i = row;
+    j = col;
+    k = row - 1;
+    l = col - 1;
+    countr = 0;
+    if (i == j){
+        i = row;
+        j = col;
+        k = row - 1;
+        l = col - 1;
+        countr = 0;
+        for (i; i<gridsize;i++){
+            j = i;
+            r = check(i,j,symbol);
+            if (r == 1)
+                countr++;
+            if (countr == length){
+                return 1;
             }
-            for (j = row-1;j<gridsize;j--) {
-                if (r == 1){
-                    count++;
-                    printf("Count: %i Coords: %i,%i Checks: %i",count,i,j,__Check_Count);
-                }
-                else if (count == length) {
-                    e = 1;
-                    break;
-                }
-                else if(r == 0)
-                    break;
-            }
-            if (count == length){
-                e = 1;
+            else if (r == 0)
                 break;
+        }
+        for (k; k>=0;k++){
+            l = k;
+            r = check(k,l,symbol);
+            if (r == 1)
+                countr++;
+            if (countr == length){
+                return 1;
+            }
+            else if (r == 0)
+                break;
+        }
+    }
+        //------------
+    else if(j > i){
+        i = row;
+        j = col;
+        k = row - 1;
+        l = col - 1;
+        countr = 0;
+        s = j - i;
+        for (i; i<gridsize;i++){
+            j = i + s;
+            if (i < gridsize && j< gridsize){
+                r = check(i,j,symbol);
+                if (r == 1)
+                    countr++;
+                if (countr == length){
+                    return 1;
+                }
+                else if (r == 0)
+                    break;
             }
         }
-        else {
-            printf("End\n");
-            e = 1;
+        for (k; k>=0;k--){
+            l = k + s;
+            if (k >= 0 && l >= 0){
+                r = check(k,l,symbol);
+                if (r == 1)
+                    countr++;
+                if (countr == length){
+                    return 1;
+                }
+                else if (r == 0)
+                    break;
+            }
         }
-    }while (e == 0);
-    if (count == length)
-        return 1;
-        /*if (grid[i+1][j] == symbol)
-            //opt = 3;
-        if (grid[i-1][j]);//down
-        grid[i+1][j+1]//topright
-        grid[i+1][j-1]//topleft
-        grid[i-1][j+1]//bottomright
-        grid[i-1][j+1]//bottomleft
-
-    switch ()
-    {
-        case 1 :
-            printf ("");
-            break;
-        case 6 :
-            printf ("");
-            break;
-        case 7:
-            printf ("");
-            break;
-        default :
-            printf ("");
-    }*/
-    return -1;
+    }
+        //---------
+    else if(i > j){
+        i = row;
+        j = col;
+        k = row - 1;
+        l = col - 1;
+        countr = 0;
+        s = i - j;
+        for (i; i<gridsize && j<gridsize;i++){
+            j = i - s;
+            if (i < gridsize && j< gridsize){
+                r = check(i,j,symbol);
+                if (r == 1)
+                    countr++;
+                if (countr == length){
+                    return 1;
+                }
+                else if (r == 0)
+                    break;
+            }
+        }
+        for (k; k>=0;k--){
+            l = k - s;
+            if (k >= 0 && l >= 0){
+                r = check(k,l,symbol);
+                if (r == 1)
+                    countr++;
+                if (countr == length){
+                    return 1;
+                }
+                else if (r == 0)
+                    break;
+            }
+        }
+    }
+    //-------AntiDiag--------
+    i = row;
+    j = col;
+    k = row - 1;
+    l = col + 1;
+    if (i == (gridsize-1) - j){
+        i = row;
+        j = col;
+        k = row - 1;
+        l = col + 1;
+        countr = 0;
+        for (i; i<gridsize;i++){
+            j = (gridsize -1) - i;
+            r = check(i,j,symbol);
+            if (r == 1)
+                countr++;
+            if (countr == length){
+                return 1;
+            }
+            else if (r == 0)
+                break;
+        }
+        for (k; k>=0;k--){
+            l = (gridsize -1) - k;
+            r = check(k,l,symbol);
+            if (r == 1)
+                countr++;
+            if (countr == length){
+                return 1;
+            }
+            else if (r == 0)
+                break;
+        }
+    }
+    return 0;
 }
 
 // IF YOU NEED ADDITIONAL FUNCTIONS YOU CAN DEFINE THEM BELOW THIS LINE
@@ -611,8 +734,6 @@ int chooselocation(){
 }
 
 
-
-
 // DON'T CHANGE THE FOLLOWING 3 LINES
 #ifndef TEST
 int  main (int argc, char* argv[])
@@ -645,7 +766,7 @@ int  main (int argc, char* argv[])
                 end = 1;
             }
             do {
-                r = playerHasWon(symbol, length);
+                r = playerHasWon(symbol,length);
                 if (r == 1) {
                     showWinMessage(symbol);
                     end = 1;
