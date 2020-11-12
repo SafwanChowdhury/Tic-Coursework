@@ -469,7 +469,7 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
     }
     //---------HORIZ------------
     for (j; j<gridsize;j++){
-        printf("Coords: %i,%i\n",i,j);
+        printf("Coords H 1: %i,%i\n",i,j);
         int r;
         r = check(i,j,symbol);
         if (r == 1)
@@ -482,7 +482,7 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
             break;
     }
     for (k;k>=0;k--){
-        printf("Coords 2: %i,%i\n",i,k);
+        printf("Coords H 2: %i,%i\n",i,k);
         int r;
         r = check(i,k,symbol);
         if (r == 1)
@@ -500,7 +500,7 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
     k = row - 1;
     countr = 0;
     for (i; i<gridsize;i++){
-        printf("Coords: %i,%i\n",i,j);
+        printf("Coords V 1: %i,%i\n",i,j);
         r = check(i,j,symbol);
         if (r == 1)
             countr++;
@@ -512,7 +512,7 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
             break;
     }
     for (k;k>=0;k--){
-        printf("Coords 2: %i,%i\n",k,j);
+        printf("Coords V 2: %i,%i\n",k,j);
         r = check(k,j,symbol);
         if (r == 1)
             countr++;
@@ -535,14 +535,13 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
         k = row - 1;
         l = col - 1;
         countr = 0;
-        printf("middle");
         for (i; i<gridsize;i++){
             j = i;
-            printf("Coords: %i,%i\n",i,j);
+            printf("Coords D 1.1: %i,%i\n",i,j);
             r = check(i,j,symbol);
             if (r == 1)
                 countr++;
-            if (countr == 4){
+            if (countr == length){
                 printf("Win\n");
                 return 1;
             }
@@ -551,11 +550,11 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
         }
         for (k; k>=0;k++){
             l = k;
-            printf("Coords 2: %i,%i\n",k,l);
+            printf("Coords D 1.2: %i,%i\n",k,l);
             r = check(k,l,symbol);
             if (r == 1)
                 countr++;
-            if (countr == 4){
+            if (countr == length){
                 printf("Win\n");
                 return 1;
             }
@@ -574,11 +573,11 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
         for (i; i<gridsize;i++){
             j = i + s;
             if (i < gridsize && j< gridsize){
-                printf("Coords 2.1: %i,%i\n",i,j);
+                printf("Coords D 2.1: %i,%i\n",i,j);
                 r = check(i,j,symbol);
                 if (r == 1)
                     countr++;
-                if (countr == 4){
+                if (countr == length){
                     printf("Win\n");
                     return 1;
                 }
@@ -589,11 +588,11 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
         for (k; k>=0;k--){
             l = k + s;
             if (k >= 0 && l >= 0){
-                printf("Coords 2.2: %i,%i\n",k,l);
+                printf("Coords D 2.2: %i,%i\n",k,l);
                 r = check(k,l,symbol);
                 if (r == 1)
                     countr++;
-                if (countr == 4){
+                if (countr == length){
                     printf("Win\n");
                     return 1;
                 }
@@ -611,13 +610,13 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
         countr = 0;
         s = i - j;
         for (i; i<gridsize && j<gridsize;i++){
-            j = i + s;
+            j = i - s;
             if (i < gridsize && j< gridsize){
-                printf("Coords 3.1: %i,%i\n",j,i);
-                r = check(j,i,symbol);
+                printf("Coords D 3.1: %i,%i\n",i,j);
+                r = check(i,j,symbol);
                 if (r == 1)
                     countr++;
-                if (countr == 4){
+                if (countr == length){
                     printf("Win\n");
                     return 1;
                 }
@@ -626,13 +625,13 @@ int effPlayerHasWon (int row, int col, char symbol , int length)
             }
         }
         for (k; k>=0;k--){
-            l = k + s;
+            l = k - s;
             if (k >= 0 && l >= 0){
-                printf("Coords 3.2: %i,%i\n",l,k);
-                r = check(l,k,symbol);
+                printf("Coords D 3.2: %i,%i\n",k,l);
+                r = check(k,l,symbol);
                 if (r == 1)
                     countr++;
-                if (countr == 4){
+                if (countr == length){
                     printf("Win\n");
                     return 1;
                 }
