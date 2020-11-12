@@ -1,4 +1,4 @@
-#define TEST				// uncomment this #define directive to run the grader on your machine
+//#define TEST				// uncomment this #define directive to run the grader on your machine
 
 // PLEASE DON'T UPLOAD THIS FILE TO THE AUTOGRADER.
 //-------------------------------------------------
