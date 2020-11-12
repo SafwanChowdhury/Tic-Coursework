@@ -456,82 +456,74 @@ int playerHasWon (char symbol , int length)
 // It returns -1 if any of the parameters have an invalid value.
 int effPlayerHasWon (int row, int col, char symbol , int length)
 {
-    /*length = z;
     int i = row;
     int j = col;
-    int l;
-    int k;
-    int count = 0;
-    int r;
-    e = 0;
-    do{
-        printf("DO\n");
-        l = col + 1;
-        k = col - 1;
-        printf("%i,%i || %i,%i\n",i,l,i,k);
-        if(grid[i][l] == symbol || grid[i][k] == symbol) {
-            printf("Enter Check\n");
-            count = 0;
-            for (j = row;j<gridsize;j++) {
-                r = check(row,col,symbol);
-                if (r == 1) {
-                    count++;
-                    printf("Count: %i Coords: %i,%i Checks: %i",count,i,j,__Check_Count);
-                }
-                else if (count == length) {
-                    e = 1;
-                    break;
-                }
-                else if(r == 0)
-                    break;
-            }
-            for (j = row-1;j<gridsize;j--) {
-                if (r == 1){
-                    count++;
-                    printf("Count: %i Coords: %i,%i Checks: %i",count,i,j,__Check_Count);
-                }
-                else if (count == length) {
-                    e = 1;
-                    break;
-                }
-                else if(r == 0)
-                    break;
-            }
-            if (count == length){
-                e = 1;
-                break;
-            }
+    int k = col - 1;
+    int countr = 0;
+    if (row < 0 || row > gridsize || col < 0 || col > gridsize || length < 3 || length > gridsize || symbol != 'X' && symbol != 'O'){
+        showErrIndex();
+        return -1;
+    }
+    //---------HORIZ------------
+    for (j; j<gridsize;j++){
+        printf("Coords: %i,%i\n",i,j);
+        int r;
+        r = check(i,j,symbol);
+        if (r == 1)
+            countr++;
+        if (countr == length){
+            printf("Win\n");
+            return 1;
         }
-        else {
-            printf("End\n");
-            e = 1;
+        else if (r == 0)
+            break;
+    }
+    for (k;k>=0;k--){
+        printf("Coords 2: %i,%i\n",i,k);
+        int r;
+        r = check(i,k,symbol);
+        if (r == 1)
+            countr++;
+        if (countr == length){
+            printf("Win\n");
+            return 1;
         }
-    }while (e == 0);
-    if (count == length)
-        return 1;
-        /*if (grid[i+1][j] == symbol)
-            //opt = 3;
-        if (grid[i-1][j]);//down
-        grid[i+1][j+1]//topright
-        grid[i+1][j-1]//topleft
-        grid[i-1][j+1]//bottomright
-        grid[i-1][j+1]//bottomleft
+        else if (r == 0)
+            break;
+    }
+    //---------VERT----------
+    i = row;
+    j = col;
+    k = row - 1;
+    countr = 0;
+    for (i; i<gridsize;i++){
+        printf("Coords: %i,%i\n",i,j);
+        int r;
+        r = check(i,j,symbol);
+        if (r == 1)
+            countr++;
+        if (countr == length){
+            printf("Win\n");
+            return 1;
+        }
+        else if (r == 0)
+            break;
+    }
+    for (k;k>=0;k--){
+        printf("Coords 2: %i,%i\n",k,j);
+        int r;
+        r = check(k,j,symbol);
+        if (r == 1)
+            countr++;
+        if (countr == length){
+            printf("Win\n");
+            return 1;
+        }
+        else if (r == 0)
+            break;
+    }
 
-    switch ()
-    {
-        case 1 :
-            printf ("");
-            break;
-        case 6 :
-            printf ("");
-            break;
-        case 7:
-            printf ("");
-            break;
-        default :
-            printf ("");
-    }*/
-    return -1;
+    return 0;
 }
 
 // IF YOU NEED ADDITIONAL FUNCTIONS YOU CAN DEFINE THEM BELOW THIS LINE
@@ -610,7 +602,39 @@ int chooselocation(){
     return row;
 }
 
-
+/*int horiz(){
+    int i = row;
+    int j = col;
+    int k = col - 1;
+    int countr = 0;
+    for (j; j<gridsize;j++){
+        //printf("Coords: %i,%i\n",i,j);
+        int r;
+        r = check(i,j,symbol);
+        if (r == 1)
+            countr++;
+        if (countr == length){
+            //printf("Win\n");
+            return 1;
+        }
+        else if (r == 0)
+            break;
+    }
+    for (k;k>=0;k--){
+        printf("Coords 2: %i,%i\n",i,k);
+        int r;
+        r = check(i,k,symbol);
+        if (r == 1)
+            countr++;
+        if (countr == length){
+            printf("Win\n");
+            return 1;
+        }
+        else if (r == 0)
+            break;
+    }
+    return 0;
+}*/
 
 
 // DON'T CHANGE THE FOLLOWING 3 LINES
@@ -645,8 +669,9 @@ int  main (int argc, char* argv[])
                 end = 1;
             }
             do {
-                r = playerHasWon(symbol, length);
+                r = effPlayerHasWon(row,col, symbol, length);
                 if (r == 1) {
+                    printf("Checks: %i", __Check_Count);
                     showWinMessage(symbol);
                     end = 1;
                 }
